@@ -12,11 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SortingTrack extends Subscriber {
-
-
-    List<Package> packages = new ArrayList<>();
-    ControlUnit cu;
-    Scanner scanner;
+    private List<Package> packages = new ArrayList<>();
+    private ControlUnit cu;
+    private Scanner scanner;
 
     public SortingTrack(ControlUnit cu) {
         this.cu = cu;

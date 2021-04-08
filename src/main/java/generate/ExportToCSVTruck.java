@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class ExportToCSVTruck {
 
 
-    List<String[]> trucks = new ArrayList<>();
+    private List<String[]> trucks = new ArrayList<>();
 
     public void start(Truck[] trucks) throws IOException {
         getTrucks(trucks);

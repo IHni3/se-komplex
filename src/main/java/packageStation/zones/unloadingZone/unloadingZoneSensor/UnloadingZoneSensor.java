@@ -8,12 +8,11 @@ public class UnloadingZoneSensor {
 
     private ArrayList<IUnloadingListener> listOfListeners;
     private boolean active = false;
-    private ControlUnit controlUnit;
-    private int id;
-    private UnloadingListener unloadingListener;
+    private final ControlUnit controlUnit;
+    private final int id;
 
     public UnloadingZoneSensor(int id, ControlUnit controlUnit) {
-        unloadingListener = new UnloadingListener();
+        UnloadingListener unloadingListener = new UnloadingListener();
         listOfListeners = new ArrayList<>();
         this.controlUnit = controlUnit;
         this.id = id;

@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class Truck {
 
-    Trailer trailer = new Trailer();
-    String id;
+    private final Trailer trailer = new Trailer();
+    private String id;
 
     public Truck() {
         // generate random ID

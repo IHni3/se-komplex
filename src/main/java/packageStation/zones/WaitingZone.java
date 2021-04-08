@@ -5,7 +5,7 @@ import generate.Truck;
 import java.util.ArrayList;
 
 public class WaitingZone {
-    private ArrayList<Truck> places;
+    private final ArrayList<Truck> places;
 
     public WaitingZone() {
         this.places = new ArrayList<>();

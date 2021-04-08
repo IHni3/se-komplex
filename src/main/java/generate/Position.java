@@ -2,8 +2,9 @@ package generate;
 
 public class Position {
 
-    Box[] level = new Box[3];
-    int lvlCounter;
+    private final Box[] level = new Box[3];
+
+    private int lvlCounter;
 
 
     public void storeBox(Box box) {
@@ -21,5 +22,13 @@ public class Position {
 
     public void setBox(int i, Box box) {
         level[i] = box;
+    }
+
+    public int getLvlCounter() {
+        return lvlCounter;
+    }
+
+    public void setLvlCounter(int lvlCounter) {
+        this.lvlCounter = lvlCounter;
     }
 }

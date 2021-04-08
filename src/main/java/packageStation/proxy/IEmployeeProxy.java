@@ -1,6 +1,6 @@
 package packageStation.proxy;
 
-public interface IMyProxy {
+public interface IEmployeeProxy {
 
     boolean hasInitRights();
 

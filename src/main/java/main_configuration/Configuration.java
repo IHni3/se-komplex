@@ -1,4 +1,4 @@
-package mainConfiguration;
+package main_configuration;
 
 public enum Configuration {
     instance;

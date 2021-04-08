@@ -11,9 +11,8 @@ import packageStation.sortingStation.StorageTrack;
 import packageStation.sortingStation.TemporaryStoragePosition;
 
 public class Robot extends Subscriber {
-    StorageTrack[] storageTracks;
-    int packageCount;
-    SortingStation sortingStation;
+    private final StorageTrack[] storageTracks;
+    private final SortingStation sortingStation;
 
     public Robot(SortingStation sortingStation) {
         this.sortingStation = sortingStation;
@@ -23,7 +22,7 @@ public class Robot extends Subscriber {
     @Subscribe
     public void palletsToStorageTrack(UnloadTemporaryStorageEvent event) {
         TemporaryStoragePosition[] temporaryStoragePosition = event.getTSP();
-        packageCount = 0;
+        int packageCount = 0;
         for (int x = 0; x < temporaryStoragePosition.length; x++) {
             for (int y = 0; y < 2; y++) {
                 Pallet pallet = temporaryStoragePosition[x].getPallet(y);

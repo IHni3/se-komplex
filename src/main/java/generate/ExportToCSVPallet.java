@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class ExportToCSVPallet {
 
 
-    List<String[]> pallets = new ArrayList<>();
+    private List<String[]> pallets = new ArrayList<>();
 
     public void start(Pallet[] pallet) throws IOException {
         getBoxes(pallet);
@@ -47,8 +47,8 @@ public class ExportToCSVPallet {
         return escapedData;
     }
 
-    public void givenDataArray_whenConvertToCSV_thenOutputCreated() throws IOException {
-        File csvOutputFile = new File("src/main/java/CSV Daten/base_pallet.csv");
+    public void givenDataArray_whenConvertToCSV_thenOutputCreated() throws IOException { //TODO
+        File csvOutputFile = new File("src/main/java/CSV Daten/base_pallet.csv"); //TODO
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
             pallets.stream()
                     .map(this::convertToCSV)

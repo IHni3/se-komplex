@@ -1,6 +1,6 @@
 package generate;
 
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;

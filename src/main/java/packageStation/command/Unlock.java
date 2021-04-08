@@ -3,7 +3,7 @@ package packageStation.command;
 import packageStation.PackageSortingStation;
 
 public class Unlock implements ICommand {
-    private PackageSortingStation packageSortingStation;
+    private final PackageSortingStation packageSortingStation;
 
     public Unlock(PackageSortingStation packageSortingStation) {
         this.packageSortingStation = packageSortingStation;

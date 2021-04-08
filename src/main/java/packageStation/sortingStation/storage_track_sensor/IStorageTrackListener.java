@@ -1,4 +1,4 @@
-package packageStation.sortingStation.storageTrackSensor;
+package packageStation.sortingStation.storage_track_sensor;
 
 import packageStation.ControlUnit;
 

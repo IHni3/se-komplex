@@ -10,9 +10,7 @@ import java.util.stream.Stream;
 
 
 public class ExportToCSVPackage {
-
-
-    List<String[]> packages = new ArrayList<>();
+    private List<String[]> packages = new ArrayList<>();
 
     public void start(Package[] packs) throws IOException {
         getPackages(packs);
@@ -42,8 +40,8 @@ public class ExportToCSVPackage {
         return escapedData;
     }
 
-    public void givenDataArray_whenConvertToCSV_thenOutputCreated() throws IOException {
-        File csvOutputFile = new File("src/main/java/CSV Daten/base_package.csv");
+    public void givenDataArray_whenConvertToCSV_thenOutputCreated() throws IOException { //TODO
+        File csvOutputFile = new File("src/main/java/CSV Daten/base_package.csv"); //TODO
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
             packages.stream()
                     .map(this::convertToCSV)

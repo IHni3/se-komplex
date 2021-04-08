@@ -2,7 +2,7 @@ package packageStation;
 
 import generate.Package;
 import generate.*;
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 import packageStation.buildReport.Report;
 import packageStation.command.SearchAlgorithm;
 import packageStation.sortingStation.SortingStation;
@@ -21,17 +21,17 @@ import java.util.Random;
 
 public class PackageSortingStation {
     private SortingStation sortingStation;
-    private int numberOfPackagesGroupedByType[];
+    private final int[] numberOfPackagesGroupedByType;
     private ControlUnit controlUnit;
     private ParkZone parkZone;
-    private UnloadingZone[] unloadingZones;
+    private final UnloadingZone[] unloadingZones;
     private WaitingZone waitingZone;
     private List<String[]> truckAttribute;
     private List<String[]> palletAttribute;
     private List<String[]> boxAttribute;
     private List<String[]> packageAttribute;
-    private ArrayList<Truck> dispatchedTrucks;
-    private AutonomousCar[] autonomousCars;
+    private final ArrayList<Truck> dispatchedTrucks;
+    private final AutonomousCar[] autonomousCars;
 
     public PackageSortingStation() {
         numberOfPackagesGroupedByType = new int[3];
@@ -115,7 +115,7 @@ public class PackageSortingStation {
                     for (int z = 1; z < 41; z++) {
                         Package p = new Package();
                         p.setID(boxAttribute.get(boxCounter)[1].split("\\|")[z]);
-                        char pContent[][][] = new char[25][10][10];
+                        char[][][] pContent = new char[25][10][10];
                         int contentCounter = 0;
                         for (int a = 0; a < 25; a++) {
                             for (int b = 0; b < 10; b++) {
@@ -166,8 +166,8 @@ public class PackageSortingStation {
     }
 
     public void shutdown() {
-        for (int i = 0; i < unloadingZones.length; i++) {
-            unloadingZones[i].turnOffSensor();
+        for (UnloadingZone unloadingZone : unloadingZones) {
+            unloadingZone.turnOffSensor();
         }
         sortingStation.unloadComponents();
     }

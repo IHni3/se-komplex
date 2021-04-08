@@ -7,10 +7,10 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 public class Report {
-    private Date currentDate;
-    private int numberOfDispatchedTrucks;
-    private int[] numberOfPackagesGroupedByType;
-    private int numberOfDangerousPackages;
+    private final Date currentDate;
+    private final int numberOfDispatchedTrucks;
+    private final int[] numberOfPackagesGroupedByType;
+    private final int numberOfDangerousPackages;
 
     private Report(Builder builder) {
         currentDate = builder.currentDate;
@@ -51,7 +51,7 @@ public class Report {
     public static class Builder {
         private Date currentDate;
         private int numberOfDispatchedLKW;
-        private int[] numberOfPackagesGroupedByType = new int[3];
+        private final int[] numberOfPackagesGroupedByType = new int[3];
         private int numberOfDangerousPackages;
 
         public Builder date() {

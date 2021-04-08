@@ -3,7 +3,7 @@ package packageStation.command;
 import packageStation.PackageSortingStation;
 
 public class Init implements ICommand {
-    PackageSortingStation packageSortingStation;
+    private final PackageSortingStation packageSortingStation;
 
 
     public Init(PackageSortingStation packageSortingStation) {

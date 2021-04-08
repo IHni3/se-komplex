@@ -2,10 +2,10 @@ package generate;
 
 public class Trailer {
 
-    Pallet[] left = new Pallet[5];
-    Pallet[] right = new Pallet[5];
-    int palletCounter;
-    boolean empty;
+    private Pallet[] left = new Pallet[5];
+    private Pallet[] right = new Pallet[5];
+    private int palletCounter;
+    private boolean empty;
 
     public void storePallet(Pallet p) {
         if (palletCounter < 5) {

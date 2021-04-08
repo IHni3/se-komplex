@@ -12,16 +12,16 @@ import java.util.stream.Stream;
 public class ExportToCSVBox {
 
 
-    List<String[]> boxes = new ArrayList<>();
+    private final List<String[]> boxes = new ArrayList<>();
 
     public void start(Box[] boxes) throws IOException {
         getBoxes(boxes);
         givenDataArray_whenConvertToCSV_thenOutputCreated();
     }
 
-    public void getBoxes(Box[] boxs) {
-        for (Box b : boxs) {
-            boxes.add(new String[]
+    public void getBoxes(Box[] boxes) {
+        for (Box b : boxes) {
+            this.boxes.add(new String[]
                     {b.getId(), b.getPackageID()});
         }
     }
@@ -41,8 +41,8 @@ public class ExportToCSVBox {
         return escapedData;
     }
 
-    public void givenDataArray_whenConvertToCSV_thenOutputCreated() throws IOException {
-        File csvOutputFile = new File("src/main/java/CSV Daten/base_box.csv");
+    public void givenDataArray_whenConvertToCSV_thenOutputCreated() throws IOException { //TODO
+        File csvOutputFile = new File("src/main/java/csv_files/base_box.csv"); //TODO into config
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
             boxes.stream()
                     .map(this::convertToCSV)

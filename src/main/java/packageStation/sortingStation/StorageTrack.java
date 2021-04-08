@@ -3,7 +3,7 @@ package packageStation.sortingStation;
 
 import generate.Package;
 import packageStation.ControlUnit;
-import packageStation.sortingStation.storageTrackSensor.StorageTrackSensor;
+import packageStation.sortingStation.storage_track_sensor.StorageTrackSensor;
 
 public class StorageTrack {
     private Package packages[];

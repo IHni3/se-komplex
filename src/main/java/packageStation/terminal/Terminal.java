@@ -8,20 +8,18 @@ import employee.IdCard;
 import employee.state.Active;
 import employee.state.Invalid;
 import employee.state.Locked;
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 import packageStation.ControlUnit;
 import packageStation.terminal.touchpad.Touchpad;
 
 public class Terminal {
-    String encryptionType = Configuration.instance.aesAlgorithm;
+    private final String encryptionType = Configuration.instance.aesAlgorithm;
 
-    int wrongPinCounter = 0;
-    int wrongSuperPinCounter = 0;
-    boolean authorized;
-    IdCard idCard;
-    ControlUnit controlUnit;
-    Touchpad touchpad;
-    Employee employee;
+    private int wrongPinCounter = 0;
+    private int wrongSuperPinCounter = 0;
+    private boolean authorized;
+    private final ControlUnit controlUnit;
+    private Employee employee;
 
     public Terminal(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
@@ -37,13 +35,12 @@ public class Terminal {
 
     private void enableTouchpad() {
         if (employee != null) {
-            touchpad = new Touchpad(employee, controlUnit);
+            Touchpad touchpad = new Touchpad(employee, controlUnit);
 
         }
     }
 
     public boolean swipeIdCard(IdCard idCard, String input) throws Exception {
-        this.idCard = idCard;
         String[] information = decrypt(idCard.getMagnetStripe().getStripe());
         if (idCard.getState().equals(new Active())) {
             if (information[3].equals(input)) {

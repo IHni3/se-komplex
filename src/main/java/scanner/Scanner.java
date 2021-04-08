@@ -7,11 +7,11 @@ import packageStation.ControlUnit;
 import packageStation.command.SearchAlgorithm;
 
 public class Scanner {
-    BoyerMooreSubscriber boyerMooreSubscriber = new BoyerMooreSubscriber();
-    RabinKarpSubscriber rabinKarpSubscriber = new RabinKarpSubscriber();
-    SearchAlgorithm searchAlgorithm = SearchAlgorithm.BM;
-    ControlUnit cu;
-    Package currentPackage;
+    private final BoyerMooreSubscriber boyerMooreSubscriber = new BoyerMooreSubscriber();
+    private final RabinKarpSubscriber rabinKarpSubscriber = new RabinKarpSubscriber();
+    private SearchAlgorithm searchAlgorithm = SearchAlgorithm.BM;
+    private ControlUnit cu;
+    private Package currentPackage;
 
 
     public Scanner(ControlUnit cu) {

@@ -2,7 +2,7 @@ package algortihms.boyer_moore;
 
 
 import factory_utils.FactoryUtils;
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 
 public class BoyerMooreFactory {
 

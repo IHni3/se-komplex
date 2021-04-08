@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class Package {
 
-    String id; // [a-z, 0-9] 6 digits
-    char[][][] content = new char[25][10][10]; // [a-z|.|:|-|!]
-    String zip; //[01067 - 99998]
-    Type type;
-    float weight;       // [1.00 - 5.00]
+    private String id; // [a-z, 0-9] 6 digits
+    private char[][][] content = new char[25][10][10]; // [a-z|.|:|-|!]
+    private String zip; //[01067 - 99998]
+    private Type type;
+    private float weight;       // [1.00 - 5.00]
 
     public void generate() {
 

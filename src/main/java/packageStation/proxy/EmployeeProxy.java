@@ -3,11 +3,11 @@ package packageStation.proxy;
 import employee.Employee;
 import employee.Roles;
 
-public class MyProxy implements IMyProxy {
+public class EmployeeProxy implements IEmployeeProxy {
 
-    Employee employee;
+    private Employee employee;
 
-    public MyProxy(Employee employee) {
+    public EmployeeProxy(Employee employee) {
         this.employee = employee;
 
     }

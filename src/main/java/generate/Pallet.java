@@ -4,20 +4,15 @@ public class Pallet {
 
     int id;
     int boxCounter;
-    Position[][] position = new Position[2][2];
-
-    Position position1 = new Position();
-    Position position2 = new Position();
-    Position position3 = new Position();
-    Position position4 = new Position();
+    private final Position[][] position = new Position[2][2];
 
 
     public Pallet(int id) {
         this.id = id;
-        position[0][0] = position1;
-        position[0][1] = position2;
-        position[1][0] = position3;
-        position[1][1] = position4;
+        position[0][0] = new Position();
+        position[0][1] = new Position();
+        position[1][0] = new Position();
+        position[1][1] = new Position();
     }
 
     public void storeBox(Box box) {
@@ -50,9 +45,10 @@ public class Pallet {
 
     public void resetCounter() {
         boxCounter = 0;
-        position1.lvlCounter = 0;
-        position2.lvlCounter = 0;
-        position3.lvlCounter = 0;
-        position4.lvlCounter = 0;
+
+        position[0][0].setLvlCounter(0);
+        position[0][1].setLvlCounter(0);
+        position[1][0].setLvlCounter(0);
+        position[1][1].setLvlCounter(0);
     }
 }

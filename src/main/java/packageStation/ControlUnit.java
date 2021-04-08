@@ -22,9 +22,9 @@ import java.util.Random;
 
 public class ControlUnit extends events.Subscriber {
 
-    List<Package> dangerousPackages = new ArrayList<>();
+    private final List<Package> dangerousPackages = new ArrayList<>();
     private EventBus eventBus;
-    private PackageSortingStation packageSortingStation;
+    private final PackageSortingStation packageSortingStation;
     private ICommand command;
     private int filledStorageTrackCounter;
     private SearchAlgorithm searchAlgorithm;

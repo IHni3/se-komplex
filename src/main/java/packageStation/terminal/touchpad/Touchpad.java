@@ -4,19 +4,19 @@ import employee.Employee;
 import packageStation.ControlUnit;
 import packageStation.command.Shutdown;
 import packageStation.command.*;
-import packageStation.proxy.IMyProxy;
-import packageStation.proxy.MyProxy;
+import packageStation.proxy.IEmployeeProxy;
+import packageStation.proxy.EmployeeProxy;
 
 public class Touchpad implements ITouchpad {
     Employee employee;
-    IMyProxy proxy;
+    IEmployeeProxy proxy;
     ControlUnit controlUnit;
 
 
     public Touchpad(Employee employee, ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
         this.employee = employee;
-        proxy = new MyProxy(employee);
+        proxy = new EmployeeProxy(employee);
     }
 
     @Override

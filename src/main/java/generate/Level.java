@@ -2,10 +2,10 @@ package generate;
 
 public class Level {
 
-    Package[] left = new Package[4];
-    Package[] right = new Package[4];
-    int indexLeft = 0;
-    int indexRight = 0;
+    private final Package[] left = new Package[4];
+    private final Package[] right = new Package[4];
+    private int indexLeft = 0;
+    private int indexRight = 0;
 
     public void fillLeft(Package p) {
         left[indexLeft] = p;

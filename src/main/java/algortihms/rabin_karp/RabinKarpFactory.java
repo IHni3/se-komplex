@@ -2,7 +2,7 @@ package algortihms.rabin_karp;
 
 
 import factory_utils.FactoryUtils;
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 
 public class RabinKarpFactory {
 

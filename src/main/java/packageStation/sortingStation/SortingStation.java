@@ -7,13 +7,12 @@ import packageStation.sortingStation.robot.Robot;
 
 public class SortingStation extends Subscriber {
     private boolean locked = false;
-    private TemporaryStoragePosition[] temporaryStorage;
-    private EmptyBoxStorage emptyBoxStorage;
-    private EmptyPalletStorage emptyPalletStorage;
-    private Robot robot;
-    private StorageTrack[] storageTracks;
-    private SortingTrack[] sortingTracks;
-    private ControlUnit controlUnit;
+    private final TemporaryStoragePosition[] temporaryStorage;
+    private final EmptyBoxStorage emptyBoxStorage;
+    private final EmptyPalletStorage emptyPalletStorage;
+    private final StorageTrack[] storageTracks;
+    private final SortingTrack[] sortingTracks;
+    private final ControlUnit controlUnit;
 
     public SortingStation(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
@@ -22,7 +21,7 @@ public class SortingStation extends Subscriber {
         temporaryStorage = new TemporaryStoragePosition[5];
         storageTracks = new StorageTrack[8];
         sortingTracks = new SortingTrack[3];
-        robot = new Robot(this);
+        Robot robot = new Robot(this);
         controlUnit.addSubscriber(robot);
         fillTemporaryStorage();
         fillStorageTracks();

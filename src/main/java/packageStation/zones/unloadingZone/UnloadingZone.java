@@ -7,13 +7,11 @@ import packageStation.zones.unloadingZone.unloadingZoneSensor.UnloadingZoneSenso
 public class UnloadingZone {
     private int id;
     private Truck truck;
-    private UnloadingZoneSensor sensor;
-    private ControlUnit controlUnit;
+    private final UnloadingZoneSensor sensor;
 
     public UnloadingZone(int id, ControlUnit setControlUnit) {
         this.id = id;
-        this.controlUnit = setControlUnit;
-        sensor = new UnloadingZoneSensor(this.id, controlUnit);
+        sensor = new UnloadingZoneSensor(this.id, setControlUnit);
     }
 
     public void addTruck(Truck truck) {

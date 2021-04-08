@@ -3,12 +3,10 @@ package packageStation.command;
 import packageStation.PackageSortingStation;
 
 public class Next implements ICommand {
-    PackageSortingStation packageSortingStation;
+    private final PackageSortingStation packageSortingStation;
 
     public Next(PackageSortingStation packageSortingStation) {
         this.packageSortingStation = packageSortingStation;
-        System.out.println();
-
     }
 
     @Override

@@ -10,7 +10,7 @@ import packageStation.ControlUnit;
 import packageStation.sortingStation.TemporaryStoragePosition;
 
 public class AutonomousCar extends Subscriber {
-    private EventBus eventBus;
+    private final EventBus eventBus;
     private ControlUnit controlUnit;
 
     public AutonomousCar(EventBus eventBus) {
@@ -27,13 +27,13 @@ public class AutonomousCar extends Subscriber {
         TemporaryStoragePosition[] temporaryStoragePosition = controlUnit.getPackageSortingStation().getSortingStation().getTemporaryStorage();
         int palletCount = 0;
 
-        for (int positionCount = 0; positionCount < temporaryStoragePosition.length; positionCount++) {
+        for (TemporaryStoragePosition storagePosition : temporaryStoragePosition) {
             for (int storageCount = 0; storageCount < 2; storageCount++) {
                 if (palletCount < 5) {
-                    temporaryStoragePosition[positionCount].addPallet(storageCount, unloadTrailer.getLeftPallets()[palletCount]);
+                    storagePosition.addPallet(storageCount, unloadTrailer.getLeftPallets()[palletCount]);
                     palletCount++;
                 } else {
-                    temporaryStoragePosition[positionCount].addPallet(storageCount, unloadTrailer.getRightPallets()[palletCount - 5]);
+                    storagePosition.addPallet(storageCount, unloadTrailer.getRightPallets()[palletCount - 5]);
                     palletCount++;
                 }
             }

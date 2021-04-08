@@ -3,7 +3,7 @@ package packageStation.zones;
 import vehicles.AutonomousCar;
 
 public class ParkZone {
-    private AutonomousCar autonomousCars[];
+    private final AutonomousCar[] autonomousCars;
 
     public ParkZone() {
         autonomousCars = new AutonomousCar[5];

@@ -1,7 +1,7 @@
 package app;
 
 import employee.*;
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 
 public class createEmployees {
 

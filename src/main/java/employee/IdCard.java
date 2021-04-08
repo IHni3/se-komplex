@@ -5,7 +5,7 @@ import cryption.OperationContext;
 import cryption.OperationDesEncrypt;
 import employee.state.Active;
 import employee.state.IIdCardState;
-import mainConfiguration.Configuration;
+import main_configuration.Configuration;
 
 import java.util.ArrayList;
 import java.util.Arrays;

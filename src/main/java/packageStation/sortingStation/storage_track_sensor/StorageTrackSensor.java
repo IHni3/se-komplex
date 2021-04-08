@@ -1,4 +1,4 @@
-package packageStation.sortingStation.storageTrackSensor;
+package packageStation.sortingStation.storage_track_sensor;
 
 import packageStation.ControlUnit;
 
@@ -7,8 +7,8 @@ import java.util.List;
 
 public class StorageTrackSensor {
 
-    ControlUnit controlUnit;
-    private List<IStorageTrackListener> listOfListeners;
+    private final ControlUnit controlUnit;
+    private final List<IStorageTrackListener> listOfListeners;
 
     public StorageTrackSensor(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;

@@ -1,7 +1,7 @@
 import packageStation.PackageSortingStation;
 import vehicles.AutonomousCar;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TestStation {
     PackageSortingStation packageSortingStation;
@@ -13,51 +13,49 @@ public class TestStation {
 
         //PackageSortingStation
         packageSortingStation = new PackageSortingStation();
-        assertTrue(packageSortingStation != null);
 
         //ControlUnit
-        assertTrue(packageSortingStation.getControlUnit() != null);
+        assertNotNull(packageSortingStation.getControlUnit());
 
         //7 unloaing Zones
         for (int i = 0; i < packageSortingStation.getUnloadingZones().length; i++) {
-            assertTrue(packageSortingStation.getUnloadingZones()[i] != null);
+            assertNotNull(packageSortingStation.getUnloadingZones()[i]);
         }
 
         //Parkzone
-        assertTrue(packageSortingStation.getParkZone() != null);
+        assertNotNull(packageSortingStation.getParkZone());
         //Array for Cars has 5 empty Spaces
-        assertTrue(packageSortingStation.getParkZone().getAutonomousCars().length == 5);
+        assertEquals(5, packageSortingStation.getParkZone().getAutonomousCars().length);
         for (int i = 0; i < packageSortingStation.getParkZone().getAutonomousCars().length; i++) {
-            assertTrue(packageSortingStation.getParkZone().getAutonomousCars()[i] == null);
+            assertNull(packageSortingStation.getParkZone().getAutonomousCars()[i]);
         }
 
         //fill Parkzone with 5 Cars
         for (int i = 0; i < packageSortingStation.getParkZone().getAutonomousCars().length; i++) {
             AutonomousCar car = new AutonomousCar(packageSortingStation.getControlUnit().getEventBus());
-            assertTrue(car != null);
             packageSortingStation.getParkZone().addCar(i, car);
         }
         //Parkzone has 5 Cars
         for (int i = 0; i < packageSortingStation.getParkZone().getAutonomousCars().length; i++) {
-            assertTrue(packageSortingStation.getParkZone().getAutonomousCars()[i] != null);
+            assertNotNull(packageSortingStation.getParkZone().getAutonomousCars()[i]);
         }
 
         //SortingStation
-        assertTrue(packageSortingStation.getSortingStation() != null);
+        assertNotNull(packageSortingStation.getSortingStation());
 
 
         packageSortingStation.init();
         assertTrue(packageSortingStation.getSortingStation().getTemporaryStorage()[0].isEmpty());
         String truckId = packageSortingStation.getWaitingZone().getTruck(0).getTruckID();
 
-        assertTrue(packageSortingStation.getWaitingZone().getTruck(0) != null);
-        assertTrue(packageSortingStation.getUnloadingZones()[0].getTruck() == null);
+        assertNotNull(packageSortingStation.getWaitingZone().getTruck(0));
+        assertNull(packageSortingStation.getUnloadingZones()[0].getTruck());
         packageSortingStation.next();
 
-        assertTrue(packageSortingStation.getDispatchedTrucks().get(0).getTruckID() == truckId);
+        assertSame(packageSortingStation.getDispatchedTrucks().get(0).getTruckID(), truckId);
         assertTrue(packageSortingStation.getDispatchedTrucks().get(0).getTrailer().isEmpty());
 
-        assertTrue(packageSortingStation.getSortingStation().getTemporaryStorage() != null);
+        assertNotNull(packageSortingStation.getSortingStation().getTemporaryStorage());
         //System.out.println("NEIIIIIIIIIIIIIIIIIIIIIIIIIN "+ packageSortingStation.getSortingStation().getTemporaryStorage()[0].getPallet(0));
         //assertTrue(packageSortingStation.getSortingStation().getTemporaryStorage()[0].isEmpty()==true);
 

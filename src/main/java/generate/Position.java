@@ -8,15 +8,15 @@ public class Position {
 
 
     public void storeBox(Box box) {
-        level[lvlCounter] = box;
+        setBox(lvlCounter, box);
         lvlCounter++;
     }
 
     public String getBoxID(int lvl) {
-        return level[lvl].getId();
+        return level[lvl].getBoxID();
     }
 
-    public Box[] getBoxs() {
+    public Box[] getBoxArray() {
         return level;
     }
 

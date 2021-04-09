@@ -5,15 +5,16 @@ public enum Configuration {
     public int numberOfPackages = 24000;
     public int numberOfBoxes = 600;
     public int numberOfPallets = 50;
-    public int numberOfLKWS = 5;
+    public int numberOfTrucks = 5;
 
     public int packageHeight = 10;
     public int packageWidth = 10;
     public int packageLength = 25;
 
     public int numberOfBoxLevels = 5;
-    public int numberOfPackagesInBox = 8;
-    public int numberOfBoxLayers = 3;
+    public int numberOfPackagesInBox = 40;
+    public int numberOfPalletLayers = 3;
+
 
 
     public int numberOfUnloadingZones = 7;
@@ -37,5 +38,9 @@ public enum Configuration {
     public String commonPathToJavaArchive = userDirectory + fileSeparator + "components" + fileSeparator;
     public String pathToBoyerMooreJavaArchive = commonPathToJavaArchive + "boyerMoore" + fileSeparator + "jar" + fileSeparator + "boyerMoore.jar";
     public String pathToRabinKarpJavaArchive = commonPathToJavaArchive + "rabinKarp" + fileSeparator + "jar" + fileSeparator + "rabinKarp.jar";
+    public String pathToBoxCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_box.csv";
+    public String pathToPackageCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_package.csv";
+    public String pathToPalletCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_pallet.csv";
+    public String pathToTruckCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_truck.csv";
 
 }

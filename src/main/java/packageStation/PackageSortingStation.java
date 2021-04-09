@@ -102,7 +102,7 @@ public class PackageSortingStation {
 
         int boxCounter = 0;
         int packageCount = 0;
-        for (int i = 0; i < Configuration.instance.numberOfLKWS; i++) {
+        for (int i = 0; i < Configuration.instance.numberOfTrucks; i++) {
             int j = i * 10;
             Truck truck = new Truck();
             truck.setTruckID(truckAttribute.get(j)[0]);
@@ -111,7 +111,7 @@ public class PackageSortingStation {
                 Pallet pallet = new Pallet(x);
                 for (int y = 0; y < 12; y++) {
                     Box box = new Box();
-                    box.setID(palletAttribute.get(boxCounter)[3]);
+                    box.setBoxID(palletAttribute.get(boxCounter)[3]);
                     for (int z = 1; z < 41; z++) {
                         Package p = new Package();
                         p.setID(boxAttribute.get(boxCounter)[1].split("\\|")[z]);
@@ -127,15 +127,15 @@ public class PackageSortingStation {
                         }
                         p.setWeight(Float.parseFloat(packageAttribute.get(packageCount)[4]));
                         p.setType(packageAttribute.get(packageCount)[3]);
-                        p.setZip(packageAttribute.get(packageCount)[2]);
+                        p.setZipCode(packageAttribute.get(packageCount)[2]);
                         p.setContent(pContent);
-                        box.fillLvl(p);
+                        box.fillBox(p);
                         packageCount++;
                     }
                     pallet.storeBox(box);
                     boxCounter++;
                 }
-                trailer.storePallet(pallet);
+                trailer.loadTruck(pallet);
             }
             waitingZone.addTruck(truck);
             System.out.println("Truck " + truck.getTruckID() + " in WaitingZone");

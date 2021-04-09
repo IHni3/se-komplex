@@ -8,40 +8,43 @@ import java.util.Random;
 
 public class Box {
 
-    private String id;
-    private final List<Level> lvl = new ArrayList<>(Configuration.instance.numberOfBoxLevels);
+    private String boxID;
+    private final List<BoxLevel> lvlList = new ArrayList<>(Configuration.instance.numberOfBoxLevels);
     private int lvlCount = 0;
     private int packageCount = 0;
 
     public Box() {
         generateBox();
+        generateBoxID();
     }
 
     private void generateBox() {
-        for (var i = 0; i < Configuration.instance.numberOfBoxLevels; i++)
-            lvl.add(new Level());
+        for (int i = 0; i < Configuration.instance.numberOfBoxLevels; i++) {
+            lvlList.add(new BoxLevel());
+        }
     }
 
-    public void fillLvl(Package p) {
-        if (packageCount < Configuration.instance.numberOfPackagesInBox) {
-            if (packageCount < Configuration.instance.numberOfPackagesInBox / 2) {
-                lvl.get(lvlCount).fillLeft(p);
-            } else lvl.get(lvlCount).fillRight(p);
+    public void fillBox(Package p) {
+        int numberOfPackagesInLevel = Configuration.instance.numberOfPackagesInBox/Configuration.instance.numberOfBoxLevels;
+        if (packageCount < numberOfPackagesInLevel) {
+            if (packageCount < numberOfPackagesInLevel / 2) {
+                lvlList.get(lvlCount).fillLeft(p);
+            } else lvlList.get(lvlCount).fillRight(p);
             packageCount++;
         } else {
             packageCount = 0;
             lvlCount++;
-            fillLvl(p);
+            fillBox(p);
         }
     }
 
-    public void generateID() {
+    private void generateBoxID() {
         // generate random ID
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 5;                 // 5 chars.
         Random random = new Random();
-        id = random.ints(leftLimit, rightLimit + 1)
+        boxID = random.ints(leftLimit, rightLimit + 1)
                 // leave out Unicode chars and Capitalized Letters.
                 .filter(i -> (i <= 57 || i >= 97))
                 .limit(targetStringLength)
@@ -49,32 +52,32 @@ public class Box {
                 .toString();
     }
 
-    public String getId() {
-        return id;
+    public String getBoxID() {
+        return boxID;
     }
 
     public Package getPackage(int ind) {
         int l = ind / 8;
-        return lvl.get(l).getPackage(ind % 8);
+        return lvlList.get(l).getPackage(ind % 8);
     }
 
-    public void setID(String setID) {
-        this.id = setID;
+    public void setBoxID(String setID) {
+        this.boxID = setID;
     }
 
     public String getPackageID() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < Configuration.instance.numberOfPackagesInBox; i++) {
             result.append("|").append(getPackage(i).getId());
         }
         return result.toString();
     }
 
-    public void removeAll() {
+    public void emptyBox() {
         lvlCount = 0;
         packageCount = 0;
 
-        lvl.clear();
+        lvlList.clear();
         generateBox();
     }
 }

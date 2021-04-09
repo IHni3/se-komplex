@@ -2,13 +2,13 @@ package generate;
 
 public class Pallet {
 
-    int id;
+    int palletID;
     int boxCounter;
     private final Position[][] position = new Position[2][2];
 
 
     public Pallet(int id) {
-        this.id = id;
+        this.palletID = id;
         position[0][0] = new Position();
         position[0][1] = new Position();
         position[1][0] = new Position();
@@ -16,14 +16,13 @@ public class Pallet {
     }
 
     public void storeBox(Box box) {
-        if (boxCounter < 4) {
-            if (boxCounter < 2) {
+        if (boxCounter <= 3) {
+            if (boxCounter <= 1) {
                 position[0][boxCounter].storeBox(box);
-                boxCounter++;
             } else {
                 position[1][boxCounter - 2].storeBox(box);
-                boxCounter++;
             }
+            boxCounter++;
         } else {
             // next level
             boxCounter = 0;
@@ -31,8 +30,8 @@ public class Pallet {
         }
     }
 
-    public int getID() {
-        return id;
+    public int getPalletID() {
+        return palletID;
     }
 
     public String getBoxID(int x, int y, int lvl) {

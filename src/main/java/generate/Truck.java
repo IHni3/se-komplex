@@ -6,7 +6,7 @@ import java.util.Random;
 public class Truck {
 
     private final Trailer trailer = new Trailer();
-    private String id;
+    private String truckID;
 
     public Truck() {
         // generate random ID
@@ -14,7 +14,7 @@ public class Truck {
         int rightLimit = 90; // letter 'Z'
         int targetStringLength = 4;                 // 6 chars.
         Random random = new Random();
-        id = random.ints(leftLimit, rightLimit + 1)
+        truckID = random.ints(leftLimit, rightLimit + 1)
                 // leave out Unicode chars.
                 .filter(i -> (i <= 57 || i >= 65))
                 .limit(targetStringLength)
@@ -24,11 +24,11 @@ public class Truck {
     }
 
     public String getTruckID() {
-        return id;
+        return truckID;
     }
 
     public void setTruckID(String setID) {
-        this.id = setID;
+        this.truckID = setID;
     }
 
     public Trailer getTrailer() {
@@ -36,6 +36,6 @@ public class Truck {
     }
 
     public void storePallet(Pallet p) {
-        trailer.storePallet(p);
+        trailer.loadTruck(p);
     }
 }

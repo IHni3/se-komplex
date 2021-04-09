@@ -5,24 +5,24 @@ public class Trailer {
     private Pallet[] left = new Pallet[5];
     private Pallet[] right = new Pallet[5];
     private int palletCounter;
-    private boolean empty;
+    private boolean isEmpty;
 
-    public void storePallet(Pallet p) {
+    public void loadTruck(Pallet pallet) {
         if (palletCounter < 5) {
-            left[palletCounter] = p;
+            left[palletCounter] = pallet;
         } else {
-            right[palletCounter - 5] = p;
+            right[palletCounter - 5] = pallet;
         }
         palletCounter++;
-        empty = false;
+        isEmpty = false;
     }
 
     public int getLeftPalletID(int pos) {
-        return left[pos].getID();
+        return left[pos].getPalletID();
     }
 
     public int getRightPalletID(int pos) {
-        return right[pos].getID();
+        return right[pos].getPalletID();
     }
 
     public Pallet[] getLeftPallets() {
@@ -37,10 +37,10 @@ public class Trailer {
         left = new Pallet[5];
         right = new Pallet[5];
         palletCounter = 0;
-        empty = true;
+        isEmpty = true;
     }
 
     public boolean isEmpty() {
-        return empty;
+        return isEmpty;
     }
 }

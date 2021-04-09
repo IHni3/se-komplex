@@ -29,7 +29,7 @@ public class Robot extends Subscriber {
                 for (int a = 0; a < 2; a++) {
                     for (int b = 0; b < 2; b++) {
                         for (int c = 0; c < 3; c++) {
-                            Box box = pallet.getPosition()[a][b].getBoxs()[c];
+                            Box box = pallet.getPosition()[a][b].getBoxArray()[c];
                             for (int d = 0; d < 40; d++) {
                                 Package p = box.getPackage(d);
                                 if (packageCount < 600) {
@@ -71,7 +71,7 @@ public class Robot extends Subscriber {
                                     }
                                 }
                             }
-                            box.removeAll();
+                            box.emptyBox();
                             sortingStation.getEmptyBoxStorage().addBox(box);
                             pallet.getPosition()[a][b].setBox(c, null);
                         }

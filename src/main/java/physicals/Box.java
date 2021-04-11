@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Box {
 
-    private String boxID;
     private final List<BoxLevel> lvlList = new ArrayList<>(Configuration.instance.numberOfBoxLevels);
+    private String boxID;
     private int lvlCount = 0;
     private int packageCount = 0;
 
@@ -25,7 +25,7 @@ public class Box {
     }
 
     public void fillBox(Package p) {
-        int numberOfPackagesInLevel = Configuration.instance.numberOfPackagesInBox/Configuration.instance.numberOfBoxLevels;
+        int numberOfPackagesInLevel = Configuration.instance.numberOfPackagesInBox / Configuration.instance.numberOfBoxLevels;
         if (packageCount < numberOfPackagesInLevel) {
             if (packageCount < numberOfPackagesInLevel / 2) {
                 lvlList.get(lvlCount).fillLeft(p);
@@ -42,7 +42,6 @@ public class Box {
 
         Random random = new Random();
         boxID = random.ints(48, 123)
-                // leave out Unicode chars and Capitalized Letters.
                 .filter(i -> (i <= 57 || i >= 97))
                 .limit(Configuration.instance.lengthOfBoxID)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -53,14 +52,14 @@ public class Box {
         return boxID;
     }
 
-    public Package getPackage(int counter) {
-        int packagesOnLevel = Configuration.instance.numberOfPackagesInBox/Configuration.instance.numberOfBoxLevels;
-        int level = counter / packagesOnLevel;
-        return lvlList.get(level).getPackage(counter % packagesOnLevel);
-    }
-
     public void setBoxID(String setID) {
         this.boxID = setID;
+    }
+
+    public Package getPackage(int counter) {
+        int packagesOnLevel = Configuration.instance.numberOfPackagesInBox / Configuration.instance.numberOfBoxLevels;
+        int level = counter / packagesOnLevel;
+        return lvlList.get(level).getPackage(counter % packagesOnLevel);
     }
 
     public String getPackageID() {

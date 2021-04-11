@@ -4,16 +4,16 @@ import main_configuration.Configuration;
 
 public class Trailer {
 
-    private Pallet[] left = new Pallet[Configuration.instance.numberOfPalletsOnTrailer/2];
-    private Pallet[] right = new Pallet[Configuration.instance.numberOfPalletsOnTrailer/2];
+    private Pallet[] left = new Pallet[Configuration.instance.numberOfPalletsOnTrailer / 2];
+    private Pallet[] right = new Pallet[Configuration.instance.numberOfPalletsOnTrailer / 2];
     private int palletCounter;
     private boolean isEmpty;
 
     public void loadTruck(Pallet pallet) {
-        if (palletCounter < Configuration.instance.numberOfPalletsOnTrailer/2) {
+        if (palletCounter < Configuration.instance.numberOfPalletsOnTrailer / 2) {
             left[palletCounter] = pallet;
         } else {
-            right[palletCounter - (Configuration.instance.numberOfPalletsOnTrailer/2)] = pallet;
+            right[palletCounter - (Configuration.instance.numberOfPalletsOnTrailer / 2)] = pallet;
         }
         palletCounter++;
         isEmpty = false;
@@ -36,8 +36,8 @@ public class Trailer {
     }
 
     public void emptyTrailer() {
-        left = new Pallet[Configuration.instance.numberOfPalletsOnTrailer/2];
-        right = new Pallet[Configuration.instance.numberOfPalletsOnTrailer/2];
+        left = new Pallet[Configuration.instance.numberOfPalletsOnTrailer / 2];
+        right = new Pallet[Configuration.instance.numberOfPalletsOnTrailer / 2];
         palletCounter = 0;
         isEmpty = true;
     }

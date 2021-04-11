@@ -1,19 +1,18 @@
 package packageStation.sortingStation;
 
 import events.Subscriber;
+import main_configuration.Configuration;
 import packageStation.ControlUnit;
 import packageStation.command.SearchAlgorithm;
-import packageStation.sortingStation.robot.Robot;
-import main_configuration.Configuration;
 
 public class SortingStation extends Subscriber {
-    private boolean locked = false;
     private final TemporaryStoragePosition[] temporaryStorage = new TemporaryStoragePosition[Configuration.instance.numberOfTemporaryStoragePositions];
     private final StorageEmptyBoxes storageEmptyBoxes = new StorageEmptyBoxes();
     private final StorageEmptyPallets storageEmptyPallets = new StorageEmptyPallets();
-    private final StorageTrack[] storageTracks = new StorageTrack[Configuration.instance.numberOfStorageTracks];;
-    private final SortingTrack[] sortingTracks = new SortingTrack[Configuration.instance.numberOfSortingTracks];;
+    private final StorageTrack[] storageTracks = new StorageTrack[Configuration.instance.numberOfStorageTracks];
+    private final SortingTrack[] sortingTracks = new SortingTrack[Configuration.instance.numberOfSortingTracks];
     private final ControlUnit controlUnit;
+    private boolean locked = false;
 
     public SortingStation(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
@@ -47,7 +46,6 @@ public class SortingStation extends Subscriber {
     }
 
 
-    //      KP was das ist, in Sorting Tracks sind jetzt 3 Listen für die Bahnen.
     public void fillSortingTracks() {
         for (int i = 0; i < sortingTracks.length; i++) {
             SortingTrack sortingTrack = new SortingTrack(controlUnit);
@@ -82,11 +80,6 @@ public class SortingStation extends Subscriber {
     public StorageEmptyPallets getStorageEmptyPallets() {
         return storageEmptyPallets;
     }
-
-    /*public void addPackage (int i, Package p) {
-            sortingTracks[i].addPackage(p);
-    }
-     */
 
     public void unloadComponents() {
         for (SortingTrack sortingTrack : sortingTracks) {

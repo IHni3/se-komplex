@@ -1,5 +1,8 @@
 package physicals.csv_generation;
 
+import main_configuration.Configuration;
+import physicals.Truck;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,14 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import physicals.Truck;
-import main_configuration.Configuration;
-
 
 public class CSVTruckGeneration {
 
 
-    private List<String[]> listTrucks = new ArrayList<>();
+    private final List<String[]> listTrucks = new ArrayList<>();
 
     public void start(Truck[] trucks) throws IOException {
         getTrucks(trucks);

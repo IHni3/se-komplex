@@ -1,5 +1,8 @@
 package physicals.csv_generation;
 
+import main_configuration.Configuration;
+import physicals.Package;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,12 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import physicals.Package;
-import main_configuration.Configuration;
-
 
 public class CSVPackageGeneration {
-    private List<String[]> packagesList = new ArrayList<>();
+    private final List<String[]> packagesList = new ArrayList<>();
 
     public void start(Package[] packages) throws IOException {
         getPackages(packages);
@@ -50,7 +50,7 @@ public class CSVPackageGeneration {
                     .map(this::convertToCSV)
                     .forEach(printWriter::println);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 

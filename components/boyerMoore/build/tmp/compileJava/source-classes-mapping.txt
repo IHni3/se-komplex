@@ -1,5 +1,7 @@
-IStringMatching.java
- IStringMatching
+IStringMatcher.java
+ IStringMatcher
+ext/BoyerMoore.java
+ ext.BoyerMoore
 BoyerMoore.java
  BoyerMoore
  BoyerMoore$Port

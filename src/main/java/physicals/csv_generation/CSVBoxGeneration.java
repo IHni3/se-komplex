@@ -1,5 +1,8 @@
 package physicals.csv_generation;
 
+import main_configuration.Configuration;
+import physicals.Box;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import physicals.Box;
-import main_configuration.Configuration;
 
 
 public class CSVBoxGeneration {

@@ -14,34 +14,9 @@ public class BoyerMoore {
     }
 
     private boolean searchString(String text, String pattern) {
-        int[] last = buildLast(pattern);
-        var textLength = text.length();
-        var patternLength = pattern.length();
-
-        var i = patternLength - 1;
-
-        if (i > textLength - 1) {
-            return false;
-        }
-
-        int j = patternLength - 1;
-
-        do {
-            if (pattern.charAt(j) == text.charAt(i)) {
-                if (j == 0) {
-                    return true;
-                } else {
-                    i--;
-                    j--;
-                }
-            } else {
-                int lo = last[text.charAt(i)];
-                i =+ patternLength - Math.min(j, 1 + lo);
-                j = patternLength - 1;
-            }
-        } while (i <= textLength - 1);
-
-        return false;
+        ext.BoyerMoore boyerMoore = new ext.BoyerMoore(pattern);
+        int firstOccurence=boyerMoore.search(text);
+        return firstOccurence!=text.length();
     }
 
     private int[] buildLast(String pattern) {

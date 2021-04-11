@@ -2,14 +2,12 @@ package physicals;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import events.Subscriber;
 import events.EmptyTruckEvent;
+import events.Subscriber;
 import events.UnloadTruckEvent;
-import physicals.Trailer;
+import main_configuration.Configuration;
 import packageStation.ControlUnit;
 import packageStation.sortingStation.TemporaryStoragePosition;
-
-import main_configuration.Configuration;
 
 public class AutonomousCar extends Subscriber {
     private final EventBus eventBus;
@@ -31,10 +29,10 @@ public class AutonomousCar extends Subscriber {
 
         for (TemporaryStoragePosition storagePosition : temporaryStoragePosition) {
             for (int storageCount = 0; storageCount < 2; storageCount++) {
-                if (palletCount < Configuration.instance.numberOfPalletsOnTrailer/2) {
+                if (palletCount < Configuration.instance.numberOfPalletsOnTrailer / 2) {
                     storagePosition.addPallet(storageCount, unloadTrailer.getLeftPallets()[palletCount]);
                 } else {
-                    storagePosition.addPallet(storageCount, unloadTrailer.getRightPallets()[palletCount - (Configuration.instance.numberOfPalletsOnTrailer/2)]);
+                    storagePosition.addPallet(storageCount, unloadTrailer.getRightPallets()[palletCount - (Configuration.instance.numberOfPalletsOnTrailer / 2)]);
                 }
                 palletCount++;
             }

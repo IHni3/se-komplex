@@ -11,7 +11,6 @@ public class RabinKarp {
         return instance;
     }
 
-    //https://www.geeksforgeeks.org/java-program-for-rabin-karp-algorithm-for-pattern-searching/
     private boolean searchString(String text, String pattern) {
         int d = 10;
         int patternLength = pattern.length();

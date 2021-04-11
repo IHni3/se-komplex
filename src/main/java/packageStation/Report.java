@@ -43,9 +43,9 @@ public class Report {
     }
 
     public static class Builder {
+        private final int[] countPackagesGroupedByType = new int[3];
         private Date currentDate;
         private int dispatchedTrucksCount;
-        private final int[] countPackagesGroupedByType = new int[3];
         private int dangerousPackagesCount;
 
         public Builder date() {
@@ -60,9 +60,9 @@ public class Report {
 
 
         public Builder countPackagesGroupedByType(int[] setNumberOfPackagesGroupedByType) {
-            this.countPackagesGroupedByType[0] = setNumberOfPackagesGroupedByType[0]; //Anzahl der Pakete mit NORMAL
-            this.countPackagesGroupedByType[1] = setNumberOfPackagesGroupedByType[1]; //Anzahl der Pakete mit EXPRESS
-            this.countPackagesGroupedByType[2] = setNumberOfPackagesGroupedByType[2]; // Anzahl der Pakete mit VALUE
+            this.countPackagesGroupedByType[0] = setNumberOfPackagesGroupedByType[0];
+            this.countPackagesGroupedByType[1] = setNumberOfPackagesGroupedByType[1];
+            this.countPackagesGroupedByType[2] = setNumberOfPackagesGroupedByType[2];
             return this;
         }
 

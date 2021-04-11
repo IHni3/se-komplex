@@ -1,6 +1,6 @@
-date: Wed Apr 07 20:15:23 CEST 2021
-number of dispatched Trucks: 5
-number of Packages with Normal 19476
-number of Packages with Express 970
-number of Packages with Value 3554
-number of dangerous Packages: 4
+date: Sun Apr 11 19:25:16 CEST 2021
+dispatched Trucks: 5
+Normal Packages: 19130
+Express Packages: 1175
+Value Packages: 3695
+Dangerous Packages: 4

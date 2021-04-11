@@ -8,7 +8,7 @@ public enum Configuration {
     public int packageWidth = 10;
     public int packageLength = 25;
     public int lengthOfPackageID = 6;
-
+    public int numberOfDangerousPackages = 4;
 
     public int numberOfBoxes = 600;
     public int numberOfBoxLevels = 5;
@@ -34,12 +34,12 @@ public enum Configuration {
     public int numberOfTemporaryStorageLayers = 2;
 
 
-
     public int numberOfUnloadingZones = 7;
     public int numberOfAutonomousCars = 5;
 
     public int pinLength = 4;
     public int superPinLength = 6;
+
 
     public String searchPattern = "exp!os:ve";
 
@@ -52,8 +52,8 @@ public enum Configuration {
     public String userDirectory = System.getProperty("user.dir");
     public String fileSeparator = System.getProperty("file.separator");
     public String commonPathToJavaArchive = userDirectory + fileSeparator + "components" + fileSeparator;
-    public String pathToBoyerMooreJavaArchive = commonPathToJavaArchive + "boyerMoore" + fileSeparator + "jar" + fileSeparator + "boyerMoore.jar";
-    public String pathToRabinKarpJavaArchive = commonPathToJavaArchive + "rabinKarp" + fileSeparator + "jar" + fileSeparator + "rabinKarp.jar";
+    public String pathToBoyerMooreJavaArchive = commonPathToJavaArchive + "boyerMoore" + fileSeparator + "build" + fileSeparator + "libs" + fileSeparator + "boyerMoore.jar";
+    public String pathToRabinKarpJavaArchive = commonPathToJavaArchive + "rabinKarp" + fileSeparator + "build" + fileSeparator + "libs" + fileSeparator + "rabinKarp.jar";
     public String pathToBoxCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_box.csv";
     public String pathToPackageCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_package.csv";
     public String pathToPalletCSV = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator + "csv_files" + fileSeparator + "base_pallet.csv";

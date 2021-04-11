@@ -2,9 +2,7 @@ package packageStation;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import events.Subscriber;
 import events.*;
-import physicals.Package;
 import main_configuration.Configuration;
 import packageStation.command.ChangeSearchAlgorithm;
 import packageStation.command.ICommand;
@@ -16,6 +14,7 @@ import packageStation.sortingStation.parser.NormalParser;
 import packageStation.sortingStation.parser.Parser;
 import packageStation.sortingStation.parser.ValueParser;
 import physicals.AutonomousCar;
+import physicals.Package;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,8 @@ import java.util.Random;
 public class ControlUnit extends events.Subscriber {
 
     private final List<Package> dangerousPackages = new ArrayList<>();
-    private EventBus eventBus;
     private final PackageSortingStation packageSortingStation;
+    private EventBus eventBus;
     private ICommand command;
     private int filledStorageTrackCounter;
     private SearchAlgorithm searchAlgorithm;
@@ -124,27 +123,6 @@ public class ControlUnit extends events.Subscriber {
         }
     }
 
-/*
-    @Subscribe
-    public void sendCar(int zoneID){
-        int vehicleID = ThreadLocalRandom.current().nextInt(Configuration.instance.numberOfParkingZoneAutonom);
-        eventBus.post(new UnloadTruckEvent(zoneID));
-    }
-    @Subscribe
-    public void unloadingFinished(UnloadFinishedEvent event){
-        eventBus.post(new BeginEmptyingEvent());
-    }
-
-    public void sendEventStorageTrackFilled2(int id){
-        filledStorageTrackCounter++;
-        if(filledStorageTrackCounter == 8){
-            eventBus.post(new SortEvent());
-            filledStorageTrackCounter = 0;
-        }
-    }
-    //-----------------------------------------------------------------------------EMIL
-*/
-
 
     @Subscribe
     public void robotUnload(EmptyTruckEvent event) {
@@ -215,7 +193,6 @@ public class ControlUnit extends events.Subscriber {
     }
 
 
-    // start scanning packages
     public void scan() {
         SortingTrack[] sortingTracks = packageSortingStation.getSortingStation().getSortingTracks();
         for (int i = 0; i < Configuration.instance.numberOfSortingTracks; i++) {

@@ -1,24 +1,23 @@
 package packageStation.terminal;
 
-import encryption.aes.AESDecrypt;
-import encryption.OperationContext;
-import encryption.des.DESDecrypt;
 import employee.Employee;
 import employee.IDCard;
 import employee.state.Active;
 import employee.state.Invalid;
 import employee.state.Locked;
+import encryption.OperationContext;
+import encryption.aes.AESDecrypt;
+import encryption.des.DESDecrypt;
 import main_configuration.Configuration;
 import packageStation.ControlUnit;
 import packageStation.terminal.touchpad.Touchpad;
 
-public class Terminal {
+public class Terminal{
     private final String encryptionType = Configuration.instance.aesAlgorithm;
-
+    private final ControlUnit controlUnit;
     private int wrongPinCounter = 0;
     private int wrongSuperPinCounter = 0;
     private boolean authorized;
-    private final ControlUnit controlUnit;
     private Employee employee;
 
     public Terminal(ControlUnit controlUnit) {
@@ -64,10 +63,8 @@ public class Terminal {
                 return false;
             }
         } else if (idCard.getState().equals(new Invalid())) {
-            System.out.println("This Id Card is rendered invalid. Please turn it in to local authorities or the front desk");
             return false;
         } else {
-            System.out.println("invalid State");
             return false;
         }
 
@@ -76,19 +73,19 @@ public class Terminal {
     public String[] decrypt(String magnetstripe) throws Exception {
 
         if (encryptionType.equals(Configuration.instance.aesAlgorithm)) {
-            System.out.println(magnetstripe);
+
 
             OperationContext context = new OperationContext(new AESDecrypt());
             magnetstripe = context.executeStrategy(magnetstripe, Configuration.instance.secretKey);
-            System.out.println(magnetstripe);
+
 
         } else if (encryptionType.equals((Configuration.instance.desAlgorithm))) {
-            System.out.println(magnetstripe);
+
 
             OperationContext context = new OperationContext(new DESDecrypt());
             magnetstripe = context.executeStrategy(magnetstripe, Configuration.instance.secretKey);
 
-            System.out.println(magnetstripe);
+
         }
         String[] information = magnetstripe.split(";");
 

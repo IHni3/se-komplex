@@ -1,13 +1,13 @@
 package packageStation.zones;
 
-import physicals.Truck;
 import packageStation.ControlUnit;
 import packageStation.zones.unloadingZoneSensor.UnloadingZoneSensor;
+import physicals.Truck;
 
 public class UnloadingZone {
-    private int zoneID;
-    private Truck truck;
     private final UnloadingZoneSensor sensor;
+    private final int zoneID;
+    private Truck truck;
 
     public UnloadingZone(int zoneID, ControlUnit setControlUnit) {
         this.zoneID = zoneID;
@@ -16,7 +16,6 @@ public class UnloadingZone {
 
     public void addTruck(Truck truck) {
         this.truck = truck;
-        System.out.println(zoneID + ": Truck "+ truck.getTruckID() + " arrived.");
         sensor.unloadingZoneSensorTriggered();
     }
 

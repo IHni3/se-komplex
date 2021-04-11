@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class UnloadingZoneSensor {
 
-    private ArrayList<IUnloadingZoneSensorListener> listOfListeners;
-    private boolean active = false;
     private final ControlUnit controlUnit;
     private final int zoneID;
+    private ArrayList<IUnloadingZoneSensorListener> listOfListeners;
+    private boolean active = false;
 
     public UnloadingZoneSensor(int zoneID, ControlUnit controlUnit) {
         UnloadingZoneSensorListener unloadingZoneSensorListener = new UnloadingZoneSensorListener();

@@ -11,11 +11,9 @@ public class Truck {
     private String truckID;
 
     public Truck() {
-        // generate random ID
 
         Random random = new Random();
         truckID = random.ints(48, 91)
-                // leave out Unicode chars.
                 .filter(i -> (i <= 57 || i >= 65))
                 .limit(Configuration.instance.lengthOfTruckID)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)

@@ -18,39 +18,37 @@ public class Employee {
         setGeneralParameters(employeeID, name, role, pin, superPin);
         generateIDCard();
     }
-    public Employee(int employeeID, String name, Roles role, String pin, String superPin, boolean isSenior) throws Exception
-    {
+
+    public Employee(int employeeID, String name, Roles role, String pin, String superPin, boolean isSenior) throws Exception {
         setGeneralParameters(employeeID, name, role, pin, superPin);
         generateIDCard();
-        if(role==Roles.SUPERVISOR) {
+        if (role == Roles.SUPERVISOR) {
             this.isSenior = isSenior;
         }
     }
-    public Employee(int employeeID, String name, Roles role, String pin, String superPin, Profile profile) throws Exception{
+
+    public Employee(int employeeID, String name, Roles role, String pin, String superPin, Profile profile) throws Exception {
         setGeneralParameters(employeeID, name, role, pin, superPin);
         generateIDCard();
-        if(role==Roles.ADMINISTRATOR)
-        {
-            this.profile=profile;
+        if (role == Roles.ADMINISTRATOR) {
+            this.profile = profile;
         }
     }
 
-    private void generateIDCard() throws Exception
-    {
+    private void generateIDCard() throws Exception {
         idCard = new IDCard();
         idCard.encryptMagnetStripe(this.employeeID, this.name, this.role, this.pin, this.superPin);
     }
 
-    private void setGeneralParameters(int id, String name, Roles role, String pin, String superPin) throws Exception
-    {
+    private void setGeneralParameters(int id, String name, Roles role, String pin, String superPin) throws Exception {
         this.employeeID = id;
         this.name = name;
         this.role = role;
-        if(pin.length()!= Configuration.instance.pinLength) {
+        if (pin.length() != Configuration.instance.pinLength) {
             throw new Exception("wrong pin length");
         }
         this.pin = pin;
-        if(superPin.length()!= Configuration.instance.superPinLength) {
+        if (superPin.length() != Configuration.instance.superPinLength) {
             throw new Exception("wrong super pin length");
         }
 

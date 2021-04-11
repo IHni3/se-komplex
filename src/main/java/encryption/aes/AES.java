@@ -24,7 +24,7 @@ public class AES implements IEncryptionAlgorithm {
         }
     }
 
-    public String encrypt(String message, String key) throws Exception{
+    public String encrypt(String message, String key) throws Exception {
         try {
             setKey(key);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -37,7 +37,7 @@ public class AES implements IEncryptionAlgorithm {
     }
 
 
-    public String decrypt(String message, String key) throws Exception{
+    public String decrypt(String message, String key) throws Exception {
         try {
             setKey(key);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");

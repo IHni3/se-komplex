@@ -1,15 +1,14 @@
 package packageStation;
 
-import physicals.Package;
-import physicals.*;
 import main_configuration.Configuration;
 import packageStation.command.SearchAlgorithm;
 import packageStation.sortingStation.SortingStation;
 import packageStation.terminal.Terminal;
 import packageStation.zones.ParkingZone;
-import packageStation.zones.WaitingZone;
 import packageStation.zones.UnloadingZone;
-import physicals.AutonomousCar;
+import packageStation.zones.WaitingZone;
+import physicals.Package;
+import physicals.*;
 
 import java.io.BufferedReader;
 import java.nio.file.Files;
@@ -19,18 +18,18 @@ import java.util.List;
 import java.util.Random;
 
 public class PackageSortingStation {
-    private SortingStation sortingStation;
     private final int[] numberOfPackagesGroupedByType = new int[3];
+    private final UnloadingZone[] unloadingZones = new UnloadingZone[Configuration.instance.numberOfUnloadingZones];
+    private final ArrayList<Truck> dispatchedTrucksList = new ArrayList<>();
+    private final AutonomousCar[] autonomousCars = new AutonomousCar[Configuration.instance.numberOfAutonomousCars];
+    private SortingStation sortingStation;
     private ControlUnit controlUnit;
     private ParkingZone parkingZone = new ParkingZone();
-    private final UnloadingZone[] unloadingZones = new UnloadingZone[Configuration.instance.numberOfUnloadingZones];
     private WaitingZone waitingZone = new WaitingZone();
     private List<String[]> truckAttributeList = new ArrayList<>();
     private List<String[]> palletAttributeList = new ArrayList<>();
     private List<String[]> boxAttributeList = new ArrayList<>();
     private List<String[]> packageAttributeList = new ArrayList<>();
-    private final ArrayList<Truck> dispatchedTrucksList = new ArrayList<>();
-    private final AutonomousCar[] autonomousCars = new AutonomousCar[Configuration.instance.numberOfAutonomousCars];
 
     public PackageSortingStation() {
         controlUnit = new ControlUnit(this);
@@ -56,13 +55,13 @@ public class PackageSortingStation {
     }
 
     public void init() {
-        try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToTruckCSV))){
+        try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToTruckCSV))) {
             String row = "";
             while ((row = br.readLine()) != null) {
                 truckAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToPalletCSV))) {
             String row = "";
@@ -70,7 +69,7 @@ public class PackageSortingStation {
                 palletAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToBoxCSV))) {
             String row = "";
@@ -78,7 +77,7 @@ public class PackageSortingStation {
                 boxAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToPackageCSV))) {
             String row = "";
@@ -86,7 +85,7 @@ public class PackageSortingStation {
                 packageAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
 
         int boxCounter = 0;
@@ -97,13 +96,13 @@ public class PackageSortingStation {
             truck.setTruckID(truckAttributeList.get(j)[0]);
             Trailer trailer = truck.getTrailer();
             for (int x = 0; x < Configuration.instance.numberOfPalletsOnTrailer; x++) {
-                Pallet pallet = new Pallet(x+1);
+                Pallet pallet = new Pallet(x + 1);
                 for (int y = 0; y < 12; y++) {
                     Box box = new Box();
                     box.setBoxID(palletAttributeList.get(boxCounter)[Configuration.instance.numberOfPalletLevels]);
                     for (int z = 0; z < Configuration.instance.numberOfPackagesInBox; z++) {
                         Package p = new Package();
-                        p.setID(boxAttributeList.get(boxCounter)[1].split("\\|")[z+1]);
+                        p.setID(boxAttributeList.get(boxCounter)[1].split("\\|")[z + 1]);
                         char[][][] pContent = new char[Configuration.instance.packageLength][Configuration.instance.packageWidth][Configuration.instance.packageHeight];
                         int contentCounter = 0;
                         for (int a = 0; a < Configuration.instance.packageLength; a++) {
@@ -127,7 +126,6 @@ public class PackageSortingStation {
                 trailer.loadTruck(pallet);
             }
             waitingZone.addTruck(truck);
-            System.out.println("Truck " + truck.getTruckID() + " arrived in Waiting Zone");
         }
 
     }
@@ -139,7 +137,6 @@ public class PackageSortingStation {
             waitingZone.removeTruck(truck);
             unloadingZones[random].addTruck(truck);
             unloadingZones[random].removeTruck();
-            //dispatchedTrucks.add(truck);
         } else {
             next();
         }
@@ -178,7 +175,6 @@ public class PackageSortingStation {
         dispatchedTrucksList.add(truck);
     }
 
-    //Überprüfung
     public UnloadingZone[] getUnloadingZones() {
         return unloadingZones;
     }

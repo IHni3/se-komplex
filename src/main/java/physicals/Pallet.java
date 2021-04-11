@@ -2,9 +2,9 @@ package physicals;
 
 public class Pallet {
 
+    private final Position[][] position = new Position[2][2];
     int palletID;
     int boxCounter;
-    private final Position[][] position = new Position[2][2];
 
 
     public Pallet(int id) {
@@ -24,7 +24,6 @@ public class Pallet {
             }
             boxCounter++;
         } else {
-            // next level
             boxCounter = 0;
             storeBox(box);
         }

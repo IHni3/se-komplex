@@ -23,7 +23,6 @@ public class WaitingZone {
         return places.get(i);
     }
 
-    //Überprüfung
     public int getPlaces() {
         return places.size();
     }

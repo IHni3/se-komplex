@@ -1,15 +1,15 @@
 package packageStation.sortingStation;
 
 
-import physicals.Package;
 import main_configuration.Configuration;
 import packageStation.ControlUnit;
 import packageStation.sortingStation.storage_track_sensor.StorageTrackSensor;
+import physicals.Package;
 
 public class StorageTrack {
-    private Package packages[] = new Package[Configuration.instance.storageTrackCapacity];
-    private StorageTrackSensor sensor;
-    private ControlUnit controlUnit;
+    private final Package[] packages = new Package[Configuration.instance.storageTrackCapacity];
+    private final StorageTrackSensor sensor;
+    private final ControlUnit controlUnit;
 
     public StorageTrack(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;

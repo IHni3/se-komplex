@@ -1,7 +1,7 @@
 package packageStation.sortingStation.parser;
 
-import physicals.Package;
 import packageStation.ControlUnit;
+import physicals.Package;
 
 public class NormalParser extends Parser {
     public void parse(Package p, ControlUnit controlUnit) {

@@ -1,5 +1,8 @@
 package physicals.csv_generation;
 
+import main_configuration.Configuration;
+import physicals.Pallet;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,14 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import physicals.Pallet;
-import main_configuration.Configuration;
-
 
 public class CSVPalletGeneration {
 
 
-    private List<String[]> palletList = new ArrayList<>();
+    private final List<String[]> palletList = new ArrayList<>();
 
     public void start(Pallet[] pallet) throws IOException {
         getBoxes(pallet);
@@ -28,7 +28,7 @@ public class CSVPalletGeneration {
                 for (int x = 0; x < 2; x++) {
                     for (int y = 0; y < 2; y++) {
                         palletList.add(new String[]
-                                {String.valueOf(p.getPalletID()), String.valueOf(x + 2*y), String.valueOf(lvl), p.getBoxID(x, y, lvl)});
+                                {String.valueOf(p.getPalletID()), String.valueOf(x + 2 * y), String.valueOf(lvl), p.getBoxID(x, y, lvl)});
                     }
                 }
             }

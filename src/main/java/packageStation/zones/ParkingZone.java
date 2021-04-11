@@ -1,7 +1,7 @@
 package packageStation.zones;
 
-import physicals.AutonomousCar;
 import main_configuration.Configuration;
+import physicals.AutonomousCar;
 
 public class ParkingZone {
     private final AutonomousCar[] autonomousCars;

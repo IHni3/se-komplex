@@ -3,21 +3,22 @@ package packageStation.sortingStation;
 import com.google.common.eventbus.Subscribe;
 import events.LoadOnSortingTrackEvent;
 import events.Subscriber;
-import physicals.Package;
 import packageStation.ControlUnit;
-import packageStation.command.SearchAlgorithm;
 import packageStation.Scanner;
+import packageStation.command.SearchAlgorithm;
+import physicals.Package;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SortingTrack extends Subscriber {
-    private List<Package> packages = new ArrayList<>();
-    private ControlUnit controlUnit;
-    private Scanner scanner;
+    private final List<Package> packages = new ArrayList<>();
+    private final ControlUnit controlUnit;
+    private final Scanner scanner;
 
     public SortingTrack(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
+        scanner = new Scanner(controlUnit);
     }
 
     public void addPackage(Package p) {
@@ -29,10 +30,14 @@ public class SortingTrack extends Subscriber {
     }
 
     public void scan() {
-        scanner = new Scanner(controlUnit);
+
         for (Package p : packages) {
+
             scanner.search(p);
+
+
         }
+
     }
 
     public void unloadComponents() {

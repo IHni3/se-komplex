@@ -1,5 +1,5 @@
-IStringMatching.java
- IStringMatching
+IStringMatcher.java
+ IStringMatcher
 RabinKarp.java
  RabinKarp
  RabinKarp$Port

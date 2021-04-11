@@ -4,13 +4,13 @@ import employee.Employee;
 import packageStation.ControlUnit;
 import packageStation.command.Shutdown;
 import packageStation.command.*;
-import packageStation.proxy.IEmployeeProxy;
 import packageStation.proxy.EmployeeProxy;
+import packageStation.proxy.IEmployeeProxy;
 
 public class Touchpad implements ITouchpad {
-    Employee employee;
-    IEmployeeProxy proxy;
-    ControlUnit controlUnit;
+    private Employee employee;
+    private IEmployeeProxy proxy;
+    private ControlUnit controlUnit;
 
 
     public Touchpad(Employee employee, ControlUnit controlUnit) {

@@ -18,13 +18,7 @@ public class TestStation {
 
 
     public void setup() {
-
-        //PackageSortingStation
-
-        //ControlUnit
         assertNotNull(packageSortingStation.getControlUnit());
-
-        //7 unloaing Zones
         for (int i = 0; i < Configuration.instance.numberOfUnloadingZones; i++) {
             assertNotNull(packageSortingStation.getUnloadingZones()[i]);
             if(packageSortingStation.getUnloadingZones()[i] == null)
@@ -32,26 +26,22 @@ public class TestStation {
                 System.out.println("Missing Unloading Zone number: "+i);
             }
         }
-
-        //Parkzone
         assertNotNull(packageSortingStation.getParkZone());
-        //Array for Cars has 5 empty Spaces
         assertEquals(packageSortingStation.getParkZone().getAutonomousCars().length, 5);
         for (int i = 0; i < Configuration.instance.numberOfAutonomousCars; i++) {
             assertNull(packageSortingStation.getParkZone().getAutonomousCars()[i]);
         }
-
-        //fill Parkzone with 5 Cars
         for (int i = 0; i < Configuration.instance.numberOfAutonomousCars; i++) {
             AutonomousCar autonomousCar = new AutonomousCar(packageSortingStation.getControlUnit().getEventBus());
             packageSortingStation.getParkZone().addCar(i, autonomousCar);
         }
-        //Parkzone has 5 Cars
         for (int i = 0; i < Configuration.instance.numberOfAutonomousCars; i++) {
             assertNotNull(packageSortingStation.getParkZone().getAutonomousCars()[i]);
+            if(packageSortingStation.getParkZone().getAutonomousCars()[i]==null)
+            {
+                System.out.println("Missing car number"+i);
+            }
         }
-
-        //SortingStation
         assertNotNull(packageSortingStation.getSortingStation());
 
     }

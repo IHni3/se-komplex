@@ -1,6 +1,6 @@
 package packageStation.sortingStation.parser;
 
-import generate.Package;
+import physicals.Package;
 import packageStation.ControlUnit;
 
 public class ExpressParser extends Parser {
@@ -8,11 +8,11 @@ public class ExpressParser extends Parser {
         this.setSuccessor(successor);
     }
 
-    public void parse(Package p, ControlUnit cu) {
-        if (canHandlePackage(p, "EXPRESS")) {
-            cu.triggerExpress(p);
+    public void parse(Package p, ControlUnit controlUnit) {
+        if (checkPackageType(p, "EXPRESS")) {
+            controlUnit.expressPackage(p);
         } else {
-            super.parse(p, cu);
+            super.parse(p, controlUnit);
         }
     }
 }

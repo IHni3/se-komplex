@@ -1,16 +1,15 @@
 package packageStation;
 
-import generate.Package;
-import generate.*;
+import physicals.Package;
+import physicals.*;
 import main_configuration.Configuration;
-import packageStation.buildReport.Report;
 import packageStation.command.SearchAlgorithm;
 import packageStation.sortingStation.SortingStation;
 import packageStation.terminal.Terminal;
-import packageStation.zones.ParkZone;
+import packageStation.zones.ParkingZone;
 import packageStation.zones.WaitingZone;
-import packageStation.zones.unloadingZone.UnloadingZone;
-import vehicles.AutonomousCar;
+import packageStation.zones.UnloadingZone;
+import physicals.AutonomousCar;
 
 import java.io.BufferedReader;
 import java.nio.file.Files;
@@ -21,45 +20,35 @@ import java.util.Random;
 
 public class PackageSortingStation {
     private SortingStation sortingStation;
-    private final int[] numberOfPackagesGroupedByType;
+    private final int[] numberOfPackagesGroupedByType = new int[3];
     private ControlUnit controlUnit;
-    private ParkZone parkZone;
-    private final UnloadingZone[] unloadingZones;
-    private WaitingZone waitingZone;
-    private List<String[]> truckAttribute;
-    private List<String[]> palletAttribute;
-    private List<String[]> boxAttribute;
-    private List<String[]> packageAttribute;
-    private final ArrayList<Truck> dispatchedTrucks;
-    private final AutonomousCar[] autonomousCars;
+    private ParkingZone parkingZone = new ParkingZone();
+    private final UnloadingZone[] unloadingZones = new UnloadingZone[Configuration.instance.numberOfUnloadingZones];
+    private WaitingZone waitingZone = new WaitingZone();
+    private List<String[]> truckAttributeList = new ArrayList<>();
+    private List<String[]> palletAttributeList = new ArrayList<>();
+    private List<String[]> boxAttributeList = new ArrayList<>();
+    private List<String[]> packageAttributeList = new ArrayList<>();
+    private final ArrayList<Truck> dispatchedTrucksList = new ArrayList<>();
+    private final AutonomousCar[] autonomousCars = new AutonomousCar[Configuration.instance.numberOfAutonomousCars];
 
     public PackageSortingStation() {
-        numberOfPackagesGroupedByType = new int[3];
-        parkZone = new ParkZone();
-        waitingZone = new WaitingZone();
         controlUnit = new ControlUnit(this);
         sortingStation = new SortingStation(controlUnit);
         Terminal terminal = new Terminal(controlUnit);
-        truckAttribute = new ArrayList<>();
-        palletAttribute = new ArrayList<>();
-        boxAttribute = new ArrayList<>();
-        packageAttribute = new ArrayList<>();
-        unloadingZones = new UnloadingZone[7];
-        fillUnloadingZones();
-        dispatchedTrucks = new ArrayList<>();
-        autonomousCars = new AutonomousCar[5];
-        fillAutonomousCars();
+        createUnloadingZones();
+        createAutonomousCars();
     }
 
-    private void fillUnloadingZones() {
-        for (int i = 0; i < unloadingZones.length; i++) {
+    private void createUnloadingZones() {
+        for (int i = 0; i < Configuration.instance.numberOfUnloadingZones; i++) {
             UnloadingZone unloadingZone = new UnloadingZone(i, controlUnit);
             unloadingZones[i] = unloadingZone;
         }
     }
 
-    private void fillAutonomousCars() {
-        for (int i = 0; i < autonomousCars.length; i++) {
+    private void createAutonomousCars() {
+        for (int i = 0; i < Configuration.instance.numberOfAutonomousCars; i++) {
             AutonomousCar autonomousCar = new AutonomousCar(controlUnit.getEventBus());
             autonomousCar.addSubscriber(controlUnit);
             autonomousCars[i] = autonomousCar;
@@ -67,34 +56,34 @@ public class PackageSortingStation {
     }
 
     public void init() {
-        try (BufferedReader br = Files.newBufferedReader(Path.of("src/main/java/CSV Daten/base_truck.csv"))) {
+        try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToTruckCSV))){
             String row = "";
             while ((row = br.readLine()) != null) {
-                truckAttribute.add(row.split(","));
+                truckAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        try (BufferedReader br = Files.newBufferedReader(Path.of("src/main/java/CSV Daten/base_pallet.csv"))) {
+        try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToPalletCSV))) {
             String row = "";
             while ((row = br.readLine()) != null) {
-                palletAttribute.add(row.split(","));
+                palletAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        try (BufferedReader br = Files.newBufferedReader(Path.of("src/main/java/CSV Daten/base_box.csv"))) {
+        try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToBoxCSV))) {
             String row = "";
             while ((row = br.readLine()) != null) {
-                boxAttribute.add(row.split(","));
+                boxAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        try (BufferedReader br = Files.newBufferedReader(Path.of("src/main/java/CSV Daten/base_package.csv"))) {
+        try (BufferedReader br = Files.newBufferedReader(Path.of(Configuration.instance.pathToPackageCSV))) {
             String row = "";
             while ((row = br.readLine()) != null) {
-                packageAttribute.add(row.split(","));
+                packageAttributeList.add(row.split(","));
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -105,29 +94,29 @@ public class PackageSortingStation {
         for (int i = 0; i < Configuration.instance.numberOfTrucks; i++) {
             int j = i * 10;
             Truck truck = new Truck();
-            truck.setTruckID(truckAttribute.get(j)[0]);
+            truck.setTruckID(truckAttributeList.get(j)[0]);
             Trailer trailer = truck.getTrailer();
-            for (int x = 1; x <= 10; x++) {
-                Pallet pallet = new Pallet(x);
+            for (int x = 0; x < Configuration.instance.numberOfPalletsOnTrailer; x++) {
+                Pallet pallet = new Pallet(x+1);
                 for (int y = 0; y < 12; y++) {
                     Box box = new Box();
-                    box.setBoxID(palletAttribute.get(boxCounter)[3]);
-                    for (int z = 1; z < 41; z++) {
+                    box.setBoxID(palletAttributeList.get(boxCounter)[Configuration.instance.numberOfPalletLevels]);
+                    for (int z = 0; z < Configuration.instance.numberOfPackagesInBox; z++) {
                         Package p = new Package();
-                        p.setID(boxAttribute.get(boxCounter)[1].split("\\|")[z]);
-                        char[][][] pContent = new char[25][10][10];
+                        p.setID(boxAttributeList.get(boxCounter)[1].split("\\|")[z+1]);
+                        char[][][] pContent = new char[Configuration.instance.packageLength][Configuration.instance.packageWidth][Configuration.instance.packageHeight];
                         int contentCounter = 0;
-                        for (int a = 0; a < 25; a++) {
-                            for (int b = 0; b < 10; b++) {
-                                for (int c = 0; c < 10; c++) {
-                                    pContent[a][b][c] = packageAttribute.get(packageCount)[1].charAt(contentCounter);
+                        for (int a = 0; a < Configuration.instance.packageLength; a++) {
+                            for (int b = 0; b < Configuration.instance.packageWidth; b++) {
+                                for (int c = 0; c < Configuration.instance.packageHeight; c++) {
+                                    pContent[a][b][c] = packageAttributeList.get(packageCount)[1].charAt(contentCounter);
                                     contentCounter++;
                                 }
                             }
                         }
-                        p.setWeight(Float.parseFloat(packageAttribute.get(packageCount)[4]));
-                        p.setType(packageAttribute.get(packageCount)[3]);
-                        p.setZipCode(packageAttribute.get(packageCount)[2]);
+                        p.setWeight(Float.parseFloat(packageAttributeList.get(packageCount)[4]));
+                        p.setType(packageAttributeList.get(packageCount)[3]);
+                        p.setZipCode(packageAttributeList.get(packageCount)[2]);
                         p.setContent(pContent);
                         box.fillBox(p);
                         packageCount++;
@@ -138,18 +127,18 @@ public class PackageSortingStation {
                 trailer.loadTruck(pallet);
             }
             waitingZone.addTruck(truck);
-            System.out.println("Truck " + truck.getTruckID() + " in WaitingZone");
+            System.out.println("Truck " + truck.getTruckID() + " arrived in Waiting Zone");
         }
 
     }
 
     public void next() {
-        int i = new Random().nextInt(7);
-        if (unloadingZones[i].getTruck() == null) {
+        int random = new Random().nextInt(Configuration.instance.numberOfUnloadingZones);
+        if (unloadingZones[random].getTruck() == null) {
             Truck truck = waitingZone.getTruck(0);
             waitingZone.removeTruck(truck);
-            unloadingZones[i].addTruck(truck);
-            unloadingZones[i].removeTruck();
+            unloadingZones[random].addTruck(truck);
+            unloadingZones[random].removeTruck();
             //dispatchedTrucks.add(truck);
         } else {
             next();
@@ -159,9 +148,9 @@ public class PackageSortingStation {
     public void showStatistics() {
         Report report = new Report.Builder()
                 .date()
-                .numberOfDispatchedLKW(dispatchedTrucks.size())
-                .numberOfPackagesGroupedByType(numberOfPackagesGroupedByType)
-                .numberOfDangerousPackages(controlUnit.getDangerousPackages().size())
+                .dispatchedTrucksCount(dispatchedTrucksList.size())
+                .countPackagesGroupedByType(numberOfPackagesGroupedByType)
+                .dangerousPackagesCount(controlUnit.getDangerousPackages().size())
                 .build();
     }
 
@@ -182,11 +171,11 @@ public class PackageSortingStation {
 
     public void changeSearchingAlgorithm(SearchAlgorithm searchAlgorithm) {
         controlUnit.setSearchAlgorithm(searchAlgorithm);
-        sortingStation.changeSearchAlgorithm(searchAlgorithm);
+        sortingStation.changeAlgorithm(searchAlgorithm);
     }
 
     public void addDispatchedTruck(Truck truck) {
-        dispatchedTrucks.add(truck);
+        dispatchedTrucksList.add(truck);
     }
 
     //Überprüfung
@@ -206,12 +195,12 @@ public class PackageSortingStation {
         return numberOfPackagesGroupedByType;
     }
 
-    public void setNumberOfPackagesGroupedByType(int i) {
-        numberOfPackagesGroupedByType[i]++;
+    public void setNumberOfPackagesGroupedByType(int typeNumber) {
+        numberOfPackagesGroupedByType[typeNumber]++;
     }
 
-    public AutonomousCar getAutonomousCar(int i) {
-        return autonomousCars[i];
+    public AutonomousCar getAutonomousCar(int number) {
+        return autonomousCars[number];
     }
 
     public SortingStation getSortingStation() {
@@ -230,47 +219,47 @@ public class PackageSortingStation {
         this.controlUnit = controlUnit;
     }
 
-    public ParkZone getParkZone() {
-        return parkZone;
+    public ParkingZone getParkZone() {
+        return parkingZone;
     }
 
-    public void setParkZone(ParkZone parkZone) {
-        this.parkZone = parkZone;
+    public void setParkZone(ParkingZone parkingZone) {
+        this.parkingZone = parkingZone;
     }
 
-    public List<String[]> getTruckAttribute() {
-        return truckAttribute;
+    public List<String[]> getTruckAttributeList() {
+        return truckAttributeList;
     }
 
-    public void setTruckAttribute(List<String[]> truckAttribute) {
-        this.truckAttribute = truckAttribute;
+    public void setTruckAttributeList(List<String[]> truckAttributeList) {
+        this.truckAttributeList = truckAttributeList;
     }
 
-    public List<String[]> getPalletAttribute() {
-        return palletAttribute;
+    public List<String[]> getPalletAttributeList() {
+        return palletAttributeList;
     }
 
-    public void setPalletAttribute(List<String[]> palletAttribute) {
-        this.palletAttribute = palletAttribute;
+    public void setPalletAttributeList(List<String[]> palletAttributeList) {
+        this.palletAttributeList = palletAttributeList;
     }
 
-    public List<String[]> getBoxAttribute() {
-        return boxAttribute;
+    public List<String[]> getBoxAttributeList() {
+        return boxAttributeList;
     }
 
-    public void setBoxAttribute(List<String[]> boxAttribute) {
-        this.boxAttribute = boxAttribute;
+    public void setBoxAttributeList(List<String[]> boxAttributeList) {
+        this.boxAttributeList = boxAttributeList;
     }
 
-    public List<String[]> getPackageAttribute() {
-        return packageAttribute;
+    public List<String[]> getPackageAttributeList() {
+        return packageAttributeList;
     }
 
-    public void setPackageAttribute(List<String[]> packageAttribute) {
-        this.packageAttribute = packageAttribute;
+    public void setPackageAttributeList(List<String[]> packageAttributeList) {
+        this.packageAttributeList = packageAttributeList;
     }
 
-    public ArrayList<Truck> getDispatchedTrucks() {
-        return dispatchedTrucks;
+    public ArrayList<Truck> getDispatchedTrucksList() {
+        return dispatchedTrucksList;
     }
 }

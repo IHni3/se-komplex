@@ -1,10 +1,10 @@
 package packageStation.terminal;
 
-import cryption.OperationAesDecrypt;
-import cryption.OperationContext;
-import cryption.OperationDesDecrypt;
+import encryption.aes.AESDecrypt;
+import encryption.OperationContext;
+import encryption.des.DESDecrypt;
 import employee.Employee;
-import employee.IdCard;
+import employee.IDCard;
 import employee.state.Active;
 import employee.state.Invalid;
 import employee.state.Locked;
@@ -40,7 +40,7 @@ public class Terminal {
         }
     }
 
-    public boolean swipeIdCard(IdCard idCard, String input) throws Exception {
+    public boolean swipeIdCard(IDCard idCard, String input) throws Exception {
         String[] information = decrypt(idCard.getMagnetStripe().getStripe());
         if (idCard.getState().equals(new Active())) {
             if (information[3].equals(input)) {
@@ -78,14 +78,14 @@ public class Terminal {
         if (encryptionType.equals(Configuration.instance.aesAlgorithm)) {
             System.out.println(magnetstripe);
 
-            OperationContext context = new OperationContext(new OperationAesDecrypt());
+            OperationContext context = new OperationContext(new AESDecrypt());
             magnetstripe = context.executeStrategy(magnetstripe, Configuration.instance.secretKey);
             System.out.println(magnetstripe);
 
         } else if (encryptionType.equals((Configuration.instance.desAlgorithm))) {
             System.out.println(magnetstripe);
 
-            OperationContext context = new OperationContext(new OperationDesDecrypt());
+            OperationContext context = new OperationContext(new DESDecrypt());
             magnetstripe = context.executeStrategy(magnetstripe, Configuration.instance.secretKey);
 
             System.out.println(magnetstripe);

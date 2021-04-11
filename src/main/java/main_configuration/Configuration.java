@@ -2,36 +2,52 @@ package main_configuration;
 
 public enum Configuration {
     instance;
-    public int numberOfPackages = 24000;
-    public int numberOfBoxes = 600;
-    public int numberOfPallets = 50;
-    public int numberOfTrucks = 5;
 
+    public int numberOfPackages = 24000;
     public int packageHeight = 10;
     public int packageWidth = 10;
     public int packageLength = 25;
+    public int lengthOfPackageID = 6;
 
+
+    public int numberOfBoxes = 600;
     public int numberOfBoxLevels = 5;
     public int numberOfPackagesInBox = 40;
-    public int numberOfPalletLayers = 3;
+    public int lengthOfBoxID = 5;
+
+
+    public int numberOfPallets = 50;
+    public int numberOfPalletLevels = 3;
+
+    public int numberOfTrucks = 5;
+    public int lengthOfTruckID = 4;
+    public int numberOfPalletsOnTrailer = 10;
+
+
+    public int storageTrackCapacity = 600;
+
+    public int numberOfStorageTracks = 8;
+
+    public int numberOfSortingTracks = 3;
+
+    public int numberOfTemporaryStoragePositions = 5;
+    public int numberOfTemporaryStorageLayers = 2;
 
 
 
     public int numberOfUnloadingZones = 7;
-    public int numberOfParkingZoneAutonom = 5;
+    public int numberOfAutonomousCars = 5;
 
-    public String nameOfAdministrator = "Armin Admin";
+    public int pinLength = 4;
+    public int superPinLength = 6;
 
+    public String searchPattern = "exp!os:ve";
 
-    public String superPin = "superPinKlasse";
 
     public String aesAlgorithm = "AES";
     public String desAlgorithm = "DES";
 
     public String secretKey = "dhbw";
-
-    public String algorithmBM = "algortihms/boyer_moore";
-    public String algorithmRK = "algortihms/rabin_karp";
 
     public String userDirectory = System.getProperty("user.dir");
     public String fileSeparator = System.getProperty("file.separator");

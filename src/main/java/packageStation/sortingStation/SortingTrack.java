@@ -1,23 +1,23 @@
 package packageStation.sortingStation;
 
 import com.google.common.eventbus.Subscribe;
-import events.PackageToSortingTrackEvent;
+import events.LoadOnSortingTrackEvent;
 import events.Subscriber;
-import generate.Package;
+import physicals.Package;
 import packageStation.ControlUnit;
 import packageStation.command.SearchAlgorithm;
-import scanner.Scanner;
+import packageStation.Scanner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SortingTrack extends Subscriber {
     private List<Package> packages = new ArrayList<>();
-    private ControlUnit cu;
+    private ControlUnit controlUnit;
     private Scanner scanner;
 
-    public SortingTrack(ControlUnit cu) {
-        this.cu = cu;
+    public SortingTrack(ControlUnit controlUnit) {
+        this.controlUnit = controlUnit;
     }
 
     public void addPackage(Package p) {
@@ -29,7 +29,7 @@ public class SortingTrack extends Subscriber {
     }
 
     public void scan() {
-        scanner = new Scanner(cu);
+        scanner = new Scanner(controlUnit);
         for (Package p : packages) {
             scanner.search(p);
         }
@@ -41,12 +41,12 @@ public class SortingTrack extends Subscriber {
 
 
     @Subscribe
-    public void incomingPackage(PackageToSortingTrackEvent event) {
+    public void incomingPackage(LoadOnSortingTrackEvent event) {
         addPackage(event.getPackage());
-        cu.getPackageSortingStation().setNumberOfPackagesGroupedByType(event.getID());
+        controlUnit.getPackageSortingStation().setNumberOfPackagesGroupedByType(event.getEventID());
     }
 
-    public void changeSearchAlgorithm(SearchAlgorithm searchAlgorithm) {
+    public void changeAlgorithm(SearchAlgorithm searchAlgorithm) {
         scanner.changeSearchAlgorithm(searchAlgorithm);
     }
 }

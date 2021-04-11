@@ -1,20 +1,20 @@
 package packageStation.sortingStation.parser;
 
-import generate.Package;
+import physicals.Package;
 import packageStation.ControlUnit;
 
 public class Parser {
     private Parser successor;
 
-    public void parse(Package p, ControlUnit cu) {
+    public void parse(Package p, ControlUnit controlUnit) {
         if (getSuccessor() != null) {
-            getSuccessor().parse(p, cu);
+            getSuccessor().parse(p, controlUnit);
         } else {
             System.out.println("unable to find the correct parser for the package : " + p.getId());
         }
     }
 
-    protected boolean canHandlePackage(Package p, String type) {
+    protected boolean checkPackageType(Package p, String type) {
         return (p == null) || (p.getType() == type);
     }
 

@@ -1,9 +1,10 @@
 package packageStation.sortingStation;
 
-import generate.Pallet;
+import physicals.Pallet;
+import main_configuration.Configuration;
 
 public class TemporaryStoragePosition {
-    private Pallet pallets[] = new Pallet[2];
+    private Pallet pallets[] = new Pallet[Configuration.instance.numberOfTemporaryStorageLayers];
     private boolean empty;
 
     public void addPallet(int i, Pallet pallet) {
@@ -19,10 +20,13 @@ public class TemporaryStoragePosition {
     }
 
     public boolean isEmpty() {
-        if (pallets[0] == null && pallets[1] == null) {
-            return true;
-        } else {
-            return false;
+        for(int i=0; i<Configuration.instance.numberOfTemporaryStorageLayers; i++)
+        {
+            if(pallets[i] !=null)
+            {
+                return false;
+            }
         }
+        return true;
     }
 }

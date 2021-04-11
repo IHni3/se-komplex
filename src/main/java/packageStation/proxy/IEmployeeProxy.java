@@ -2,17 +2,17 @@ package packageStation.proxy;
 
 public interface IEmployeeProxy {
 
-    boolean hasInitRights();
+    boolean checkInitRights();
 
-    boolean hasNextRights();
+    boolean checkNextRights();
 
-    boolean hasLockRights();
+    boolean checkLockRights();
 
-    boolean hasUnlockRights();
+    boolean checkUnlockRights();
 
-    boolean hasChangeAlgorithmRights();
+    boolean checkChangeAlgorithmRights();
 
-    boolean hasShowStatisticsRights();
+    boolean checkShowStatisticsRights();
 
-    boolean hasShutdownRights();
+    boolean checkShutdownRights();
 }

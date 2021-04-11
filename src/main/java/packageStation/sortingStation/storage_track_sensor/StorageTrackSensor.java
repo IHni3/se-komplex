@@ -17,9 +17,9 @@ public class StorageTrackSensor {
         addListener(listener);
     }
 
-    public void trackIsFilled(int id) {
+    public void trackFull(int trackID) {
         for (int i = 0; i < listOfListeners.size(); i++) {
-            listOfListeners.get(i).trackIsFilled(controlUnit, id);
+            listOfListeners.get(i).trackFull(controlUnit, trackID);
         }
     }
 

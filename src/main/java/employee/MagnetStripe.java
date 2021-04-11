@@ -8,7 +8,7 @@ public class MagnetStripe {
         return stripe;
     }
 
-    public void write(String encryptedString) {
+    public void setStripe(String encryptedString) {
         stripe = encryptedString;
     }
 }

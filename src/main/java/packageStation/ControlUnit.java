@@ -4,8 +4,9 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import events.Subscriber;
 import events.*;
-import generate.Package;
-import packageStation.command.ChangeSortingAlgorithm;
+import physicals.Package;
+import main_configuration.Configuration;
+import packageStation.command.ChangeSearchAlgorithm;
 import packageStation.command.ICommand;
 import packageStation.command.SearchAlgorithm;
 import packageStation.sortingStation.SortingTrack;
@@ -14,7 +15,7 @@ import packageStation.sortingStation.parser.ExpressParser;
 import packageStation.sortingStation.parser.NormalParser;
 import packageStation.sortingStation.parser.Parser;
 import packageStation.sortingStation.parser.ValueParser;
-import vehicles.AutonomousCar;
+import physicals.AutonomousCar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,12 +84,12 @@ public class ControlUnit extends events.Subscriber {
     }
 
     public void chooseSearchingAlgorithmBM() {
-        setCommand(new ChangeSortingAlgorithm(SearchAlgorithm.BM, packageSortingStation));
+        setCommand(new ChangeSearchAlgorithm(SearchAlgorithm.BM, packageSortingStation));
         command.execute();
     }
 
     public void chooseSearchingAlgorithmRK() {
-        setCommand(new ChangeSortingAlgorithm(SearchAlgorithm.RK, packageSortingStation));
+        setCommand(new ChangeSearchAlgorithm(SearchAlgorithm.RK, packageSortingStation));
         command.execute();
     }
 
@@ -100,7 +101,7 @@ public class ControlUnit extends events.Subscriber {
         this.command = command;
     }
 
-    public void touchPadBtnPressed() {
+    public void touchPadUsed() {
         command.execute();
     }
 
@@ -110,14 +111,14 @@ public class ControlUnit extends events.Subscriber {
 
 
     public void sendEventTruckParked(int zoneID) {
-        int rand = new Random().nextInt(5);
+        int random = new Random().nextInt(Configuration.instance.numberOfAutonomousCars);
         try {
-            AutonomousCar autonomousCar = packageSortingStation.getAutonomousCar(rand);
-            packageSortingStation.getParkZone().removeCar(rand);
+            AutonomousCar autonomousCar = packageSortingStation.getAutonomousCar(random);
+            packageSortingStation.getParkZone().removeCar(random);
             eventBus.register(autonomousCar);
-            eventBus.post(new UnloadEvent(zoneID));
-            eventBus.unregister(packageSortingStation.getAutonomousCar(rand));
-            packageSortingStation.getParkZone().addCar(rand, autonomousCar);
+            eventBus.post(new UnloadTruckEvent(zoneID));
+            eventBus.unregister(packageSortingStation.getAutonomousCar(random));
+            packageSortingStation.getParkZone().addCar(random, autonomousCar);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -127,7 +128,7 @@ public class ControlUnit extends events.Subscriber {
     @Subscribe
     public void sendCar(int zoneID){
         int vehicleID = ThreadLocalRandom.current().nextInt(Configuration.instance.numberOfParkingZoneAutonom);
-        eventBus.post(new UnloadEvent(zoneID));
+        eventBus.post(new UnloadTruckEvent(zoneID));
     }
     @Subscribe
     public void unloadingFinished(UnloadFinishedEvent event){
@@ -146,7 +147,7 @@ public class ControlUnit extends events.Subscriber {
 
 
     @Subscribe
-    public void robotUnload(TruckIsUnloadedEvent event) {
+    public void robotUnload(EmptyTruckEvent event) {
         try {
             System.out.println(event.getMessage());
             eventBus.post(new UnloadTemporaryStorageEvent(getPackageSortingStation().getSortingStation().getTemporaryStorage()));
@@ -158,12 +159,13 @@ public class ControlUnit extends events.Subscriber {
 
     public void storageTrackFilled(int id) {
         this.filledStorageTrackCounter++;
-        if (this.filledStorageTrackCounter == 8) {
-            System.out.println("All tracks are filled");
+        if (this.filledStorageTrackCounter == Configuration.instance.numberOfStorageTracks) {
+            System.out.println("StorageTrack " + id + " is full");
+            System.out.println("All Storage Tracks are full.");
             sendEventSorting(packageSortingStation.getSortingStation().getStorageTracks());
             filledStorageTrackCounter = 0;
         } else {
-            System.out.println("StorageTrack " + id + " is filled");
+            System.out.println("StorageTrack " + id + " is full");
         }
 
     }
@@ -171,8 +173,8 @@ public class ControlUnit extends events.Subscriber {
     public void sendEventSorting(StorageTrack[] storageTracks) {
 
         List<Package> packagesTrack = new ArrayList<>();
-        for (StorageTrack t : storageTracks) {
-            for (Package p : t.getPackages()) {
+        for (StorageTrack storageTrack : storageTracks) {
+            for (Package p : storageTrack.getPackages()) {
                 packagesTrack.add(p);
             }
         }
@@ -184,28 +186,27 @@ public class ControlUnit extends events.Subscriber {
         for (Package p : packagesTrack) {
             valueParser.parse(p, getPackageSortingStation().getControlUnit());
         }
-        System.out.println("");
     }
 
     public void addDangerousPackage(Package p) {
         dangerousPackages.add(p);
     }
 
-    public void triggerNormal(Package p) {
+    public void normalPackage(Package p) {
         addSubscriber(packageSortingStation.getSortingStation().getSortingTracks()[0]);
-        eventBus.post(new PackageToSortingTrackEvent(p, 0));
+        eventBus.post(new LoadOnSortingTrackEvent(p, 0));
         removeSubscriber(packageSortingStation.getSortingStation().getSortingTracks()[0]);
     }
 
-    public void triggerValue(Package p) {
+    public void valuePackage(Package p) {
         addSubscriber(packageSortingStation.getSortingStation().getSortingTracks()[1]);
-        eventBus.post(new PackageToSortingTrackEvent(p, 1));
+        eventBus.post(new LoadOnSortingTrackEvent(p, 1));
         removeSubscriber(packageSortingStation.getSortingStation().getSortingTracks()[1]);
     }
 
-    public void triggerExpress(Package p) {
+    public void expressPackage(Package p) {
         addSubscriber(packageSortingStation.getSortingStation().getSortingTracks()[2]);
-        eventBus.post(new PackageToSortingTrackEvent(p, 2));
+        eventBus.post(new LoadOnSortingTrackEvent(p, 2));
         removeSubscriber(packageSortingStation.getSortingStation().getSortingTracks()[2]);
     }
 
@@ -216,9 +217,9 @@ public class ControlUnit extends events.Subscriber {
 
     // start scanning packages
     public void scan() {
-        SortingTrack[] st = packageSortingStation.getSortingStation().getSortingTracks();
-        for (int i = 0; i < 3; i++) {
-            st[i].scan();
+        SortingTrack[] sortingTracks = packageSortingStation.getSortingStation().getSortingTracks();
+        for (int i = 0; i < Configuration.instance.numberOfSortingTracks; i++) {
+            sortingTracks[i].scan();
         }
     }
 }

@@ -1,10 +1,10 @@
 package packageStation.terminal;
 
-import employee.IdCard;
+import employee.IDCard;
 
 public interface ITerminal {
-    void swipeIdCard(IdCard idCard);
-    boolean pinConfirmed(IdCard idCard);
-    boolean superPinConfirmed(IdCard idCard);
-    String getPinEncrypted(IdCard idCard);
+    void swipeIdCard(IDCard idCard);
+    boolean pinConfirmed(IDCard idCard);
+    boolean superPinConfirmed(IDCard idCard);
+    String getPinEncrypted(IDCard idCard);
 }

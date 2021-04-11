@@ -2,21 +2,19 @@ package packageStation.terminal.touchpad;
 
 public interface ITouchpad {
 
-    void clickInit();
+    void init();
 
-    void clickNext();
+    void next();
 
-    void clickShutdown();
+    void shutDown();
 
-    void clickLock();
+    void lock();
 
-    void clickUnlock();
+    void unlock();
 
-    void clickShowStatistics();
+    void showStatistics();
 
-    void clickChangeSearchAlgorithm();
+    void changeSearchAlgorithmToBM();
 
-    void clickChangeSearchAlgorithmToBM();
-
-    void clickChangeSearchAlgorithmToRK();
+    void changeSearchAlgorithmToRK();
 }

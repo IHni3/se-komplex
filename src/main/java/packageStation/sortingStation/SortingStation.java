@@ -4,23 +4,19 @@ import events.Subscriber;
 import packageStation.ControlUnit;
 import packageStation.command.SearchAlgorithm;
 import packageStation.sortingStation.robot.Robot;
+import main_configuration.Configuration;
 
 public class SortingStation extends Subscriber {
     private boolean locked = false;
-    private final TemporaryStoragePosition[] temporaryStorage;
-    private final EmptyBoxStorage emptyBoxStorage;
-    private final EmptyPalletStorage emptyPalletStorage;
-    private final StorageTrack[] storageTracks;
-    private final SortingTrack[] sortingTracks;
+    private final TemporaryStoragePosition[] temporaryStorage = new TemporaryStoragePosition[Configuration.instance.numberOfTemporaryStoragePositions];
+    private final StorageEmptyBoxes storageEmptyBoxes = new StorageEmptyBoxes();
+    private final StorageEmptyPallets storageEmptyPallets = new StorageEmptyPallets();
+    private final StorageTrack[] storageTracks = new StorageTrack[Configuration.instance.numberOfStorageTracks];;
+    private final SortingTrack[] sortingTracks = new SortingTrack[Configuration.instance.numberOfSortingTracks];;
     private final ControlUnit controlUnit;
 
     public SortingStation(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
-        emptyBoxStorage = new EmptyBoxStorage();
-        emptyPalletStorage = new EmptyPalletStorage();
-        temporaryStorage = new TemporaryStoragePosition[5];
-        storageTracks = new StorageTrack[8];
-        sortingTracks = new SortingTrack[3];
         Robot robot = new Robot(this);
         controlUnit.addSubscriber(robot);
         fillTemporaryStorage();
@@ -28,9 +24,9 @@ public class SortingStation extends Subscriber {
         fillSortingTracks();
     }
 
-    public void changeSearchAlgorithm(SearchAlgorithm searchAlgorithm) {
+    public void changeAlgorithm(SearchAlgorithm searchAlgorithm) {
         for (SortingTrack sortingTrack : sortingTracks) {
-            sortingTrack.changeSearchAlgorithm(searchAlgorithm);
+            sortingTrack.changeAlgorithm(searchAlgorithm);
         }
 
 
@@ -79,12 +75,12 @@ public class SortingStation extends Subscriber {
         return sortingTracks;
     }
 
-    public EmptyBoxStorage getEmptyBoxStorage() {
-        return emptyBoxStorage;
+    public StorageEmptyBoxes getStorageEmptyBoxes() {
+        return storageEmptyBoxes;
     }
 
-    public EmptyPalletStorage getEmptyPalletStorage() {
-        return emptyPalletStorage;
+    public StorageEmptyPallets getStorageEmptyPallets() {
+        return storageEmptyPallets;
     }
 
     /*public void addPackage (int i, Package p) {

@@ -1,6 +1,6 @@
 package packageStation.zones;
 
-import generate.Truck;
+import physicals.Truck;
 
 import java.util.ArrayList;
 

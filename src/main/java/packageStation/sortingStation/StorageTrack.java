@@ -1,17 +1,17 @@
 package packageStation.sortingStation;
 
 
-import generate.Package;
+import physicals.Package;
+import main_configuration.Configuration;
 import packageStation.ControlUnit;
 import packageStation.sortingStation.storage_track_sensor.StorageTrackSensor;
 
 public class StorageTrack {
-    private Package packages[];
+    private Package packages[] = new Package[Configuration.instance.storageTrackCapacity];
     private StorageTrackSensor sensor;
     private ControlUnit controlUnit;
 
     public StorageTrack(ControlUnit controlUnit) {
-        packages = new Package[600];
         this.controlUnit = controlUnit;
         sensor = new StorageTrackSensor(this.controlUnit);
     }
@@ -25,6 +25,6 @@ public class StorageTrack {
     }
 
     public void triggerSensor(int id) {
-        sensor.trackIsFilled(id);
+        sensor.trackFull(id);
     }
 }

@@ -1,7 +1,6 @@
 package packageStation.proxy;
 
 import employee.Employee;
-import employee.Roles;
 
 public class EmployeeProxy implements IEmployeeProxy {
 
@@ -17,77 +16,70 @@ public class EmployeeProxy implements IEmployeeProxy {
     }
 
     @Override
-    public boolean hasInitRights() {
-        if (employee.getRole() == Roles.SUPERVISOR) {
-            return true;
-        } else {
-            System.out.println("unauthorized for init");
-            return false;
+    public boolean checkInitRights() {
+        switch(employee.getRole())
+        {
+            case SUPERVISOR-> {return true;}
+            default ->{System.out.println("authorization denied: init"); return false;}
         }
     }
 
     @Override
-    public boolean hasNextRights() {
-        if (employee.getRole() == Roles.SUPERVISOR || employee.getRole() == Roles.OPERATOR) {
-            return true;
-        } else {
-            System.out.println("unauthorized for next");
-            return false;
+    public boolean checkNextRights() {
+        switch(employee.getRole())
+        {
+            case SUPERVISOR, OPERATOR-> {return true;}
+            default ->{System.out.println("authorization denied: next"); return false;}
         }
 
     }
 
     @Override
-    public boolean hasLockRights() {
-        if (employee.getRole() == Roles.SUPERVISOR) {
-            return true;
-        } else {
-            System.out.println("unauthorized for lock");
-            return false;
+    public boolean checkLockRights() {
+
+        switch(employee.getRole())
+        {
+            case SUPERVISOR-> {return true;}
+            default ->{System.out.println("authorization denied: lock"); return false;}
         }
     }
 
     @Override
-    public boolean hasUnlockRights() {
-        if (employee.getRole() == Roles.SUPERVISOR) {
-            return true;
-        } else {
-            System.out.println("unauthorized for unlock");
-            return false;
+    public boolean checkUnlockRights() {
+
+        switch(employee.getRole())
+        {
+            case SUPERVISOR-> {return true;}
+            default ->{System.out.println("authorization denied: unlock"); return false;}
         }
     }
 
     @Override
-    public boolean hasChangeAlgorithmRights() {
-        if (employee.getRole() == Roles.SUPERVISOR) {
-            return true;
-        } else {
-            System.out.println("unauthorized for unlock");
-            return false;
+    public boolean checkChangeAlgorithmRights() {
+
+        switch(employee.getRole())
+        {
+            case SUPERVISOR-> {return true;}
+            default ->{System.out.println("authorization denied: algorithm change"); return false;}
         }
     }
 
     @Override
-    public boolean hasShowStatisticsRights() {
-        if (employee.getRole() == Roles.SUPERVISOR ||
-                employee.getRole() == Roles.DATA_ANALYST ||
-                employee.getRole() == Roles.ADMINISTRATOR ||
-                employee.getRole() == Roles.OPERATOR
-        ) {
-            return true;
-        } else {
-            System.out.println("unauthorized for unlock");
-            return false;
+    public boolean checkShowStatisticsRights() {
+        switch(employee.getRole())
+        {
+            case SUPERVISOR, OPERATOR, ADMINISTRATOR, DATA_SCIENTIST -> {return true;}
+            default ->{System.out.println("authorization denied: statistics"); return false;}
         }
     }
 
     @Override
-    public boolean hasShutdownRights() {
-        if (employee.getRole() == Roles.SUPERVISOR || employee.getRole() == Roles.ADMINISTRATOR) {
-            return true;
-        } else {
-            System.out.println("unauthorized for shutdown");
-            return false;
+    public boolean checkShutdownRights() {
+
+        switch(employee.getRole())
+        {
+            case SUPERVISOR, ADMINISTRATOR-> {return true;}
+            default ->{System.out.println("authorization denied: shutdown"); return false;}
         }
     }
 

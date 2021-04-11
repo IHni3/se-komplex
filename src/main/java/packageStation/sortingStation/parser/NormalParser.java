@@ -1,14 +1,14 @@
 package packageStation.sortingStation.parser;
 
-import generate.Package;
+import physicals.Package;
 import packageStation.ControlUnit;
 
 public class NormalParser extends Parser {
-    public void parse(Package p, ControlUnit cu) {
-        if (canHandlePackage(p, "NORMAL")) {
-            cu.triggerNormal(p);
+    public void parse(Package p, ControlUnit controlUnit) {
+        if (checkPackageType(p, "NORMAL")) {
+            controlUnit.normalPackage(p);
         } else {
-            super.parse(p, cu);
+            super.parse(p, controlUnit);
         }
     }
 }

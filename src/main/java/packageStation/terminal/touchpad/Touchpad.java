@@ -20,83 +20,67 @@ public class Touchpad implements ITouchpad {
     }
 
     @Override
-    public void clickInit() {
-        if (proxy.hasInitRights()) {
+    public void init() {
+        if (proxy.checkInitRights()) {
             controlUnit.setCommand(new Init(controlUnit.getPackageSortingStation()));
-            controlUnit.touchPadBtnPressed();
+            controlUnit.touchPadUsed();
         }
     }
 
     @Override
-    public void clickNext() {
-        if (proxy.hasNextRights()) {
+    public void next() {
+        if (proxy.checkNextRights()) {
             controlUnit.setCommand(new Next(controlUnit.getPackageSortingStation()));
-            controlUnit.touchPadBtnPressed();
+            controlUnit.touchPadUsed();
         }
 
     }
 
     @Override
-    public void clickShutdown() {
-        if (proxy.hasShutdownRights()) {
+    public void shutDown() {
+        if (proxy.checkShutdownRights()) {
             controlUnit.setCommand(new Shutdown(controlUnit.getPackageSortingStation()));
-            controlUnit.touchPadBtnPressed();
+            controlUnit.touchPadUsed();
         }
 
     }
 
     @Override
-    public void clickLock() {
-        if (proxy.hasLockRights()) {
+    public void lock() {
+        if (proxy.checkLockRights()) {
             controlUnit.setCommand(new Lock(controlUnit.getPackageSortingStation()));
-            controlUnit.touchPadBtnPressed();
+            controlUnit.touchPadUsed();
         }
 
     }
 
     @Override
-    public void clickUnlock() {
-        if (proxy.hasUnlockRights()) {
+    public void unlock() {
+        if (proxy.checkUnlockRights()) {
             controlUnit.setCommand(new Unlock(controlUnit.getPackageSortingStation()));
-            controlUnit.touchPadBtnPressed();
+            controlUnit.touchPadUsed();
         }
 
     }
 
     @Override
-    public void clickShowStatistics() {
-        if (proxy.hasShowStatisticsRights()) {
+    public void showStatistics() {
+        if (proxy.checkShowStatisticsRights()) {
             controlUnit.setCommand(new ShowStatistics(controlUnit.getPackageSortingStation()));
-            controlUnit.touchPadBtnPressed();
+            controlUnit.touchPadUsed();
         }
 
     }
 
     @Override
-    public void clickChangeSearchAlgorithm() {
-        if (proxy.hasChangeAlgorithmRights()) {
-            if (controlUnit.getSearchAlgorithm() == SearchAlgorithm.BM) {
-                controlUnit.setCommand(new ChangeSortingAlgorithm(SearchAlgorithm.RK, controlUnit.getPackageSortingStation()));
-                controlUnit.touchPadBtnPressed();
-            }
-            if (controlUnit.getSearchAlgorithm() == SearchAlgorithm.RK) {
-                controlUnit.setCommand(new ChangeSortingAlgorithm(SearchAlgorithm.BM, controlUnit.getPackageSortingStation()));
-                controlUnit.touchPadBtnPressed();
-            }
-
-        }
-
+    public void changeSearchAlgorithmToBM() {
+        controlUnit.setCommand(new ChangeSearchAlgorithm(SearchAlgorithm.BM, controlUnit.getPackageSortingStation()));
+        controlUnit.touchPadUsed();
     }
 
     @Override
-    public void clickChangeSearchAlgorithmToBM() {
-        controlUnit.setCommand(new ChangeSortingAlgorithm(SearchAlgorithm.BM, controlUnit.getPackageSortingStation()));
-        controlUnit.touchPadBtnPressed();
-    }
-
-    @Override
-    public void clickChangeSearchAlgorithmToRK() {
-        controlUnit.setCommand(new ChangeSortingAlgorithm(SearchAlgorithm.RK, controlUnit.getPackageSortingStation()));
-        controlUnit.touchPadBtnPressed();
+    public void changeSearchAlgorithmToRK() {
+        controlUnit.setCommand(new ChangeSearchAlgorithm(SearchAlgorithm.RK, controlUnit.getPackageSortingStation()));
+        controlUnit.touchPadUsed();
     }
 }

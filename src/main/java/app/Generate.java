@@ -1,7 +1,11 @@
 package app;
 
-import generate.Package;
-import generate.*;
+import physicals.Package;
+import physicals.*;
+import physicals.csv_generation.CSVBoxGeneration;
+import physicals.csv_generation.CSVPackageGeneration;
+import physicals.csv_generation.CSVPalletGeneration;
+import physicals.csv_generation.CSVTruckGeneration;
 import main_configuration.Configuration;
 
 import java.io.IOException;
@@ -13,13 +17,14 @@ public class Generate {
     public static void main(String... args) throws IOException {
 
 
-
+        int counter=0;
         // Generate Packages
         Package[] packages = new Package[Configuration.instance.numberOfPackages];
-        for (int i = 0; i < Configuration.instance.numberOfPackages; i++) {
+        while(counter<Configuration.instance.numberOfPackages){
             Package p = new Package();
             p.generate();
-            packages[i] = p.getPackage();
+            packages[counter] = p.getPackage();
+            counter++;
         }
 
         // shuffle packages
@@ -33,14 +38,14 @@ public class Generate {
         Set <Integer> explosivePackages = new HashSet<Integer>();
         do
         {
-            int j= random.nextInt(Configuration.instance.numberOfPackages);
+            counter= random.nextInt(Configuration.instance.numberOfPackages);
 
-            if(!explosivePackages.contains(j))
+            if(!explosivePackages.contains(counter))
             {
-               packages[j].setToExplosive();
+               packages[counter].setToExplosive();
                counterExplosivePackages++;
             }
-            explosivePackages.add(j);
+            explosivePackages.add(counter);
         }while(counterExplosivePackages<=3);
 
         // Generate base_package.csv
@@ -50,13 +55,20 @@ public class Generate {
         // Generate Boxes and sorting Packages to them
         int packageIndex = 0;
         Box[] boxes = new Box[Configuration.instance.numberOfBoxes];
-        for (int i = 0; i < Configuration.instance.numberOfBoxes; i++) {
+        counter=0;
+        while(counter<Configuration.instance.numberOfBoxes)
+        {
             Box box = new Box();
-            for (int j = 0; j < Configuration.instance.numberOfPackagesInBox; j++) {
+            int j=0;
+            while(j<Configuration.instance.numberOfPackagesInBox)
+            {
                 box.fillBox(packages[packageIndex]);
                 packageIndex++;
+                j++;
             }
-            boxes[i] = box;
+
+            boxes[counter] = box;
+            counter++;
         }
 
 
@@ -69,14 +81,21 @@ public class Generate {
         int palletID = 1;
         int boxIndex = 0;
         int boxesOnPallet = Configuration.instance.numberOfBoxes/Configuration.instance.numberOfPallets;
-        for (int i = 0; i < Configuration.instance.numberOfPallets; i++) {
+        counter=0;
+        while(counter<Configuration.instance.numberOfPallets)
+        {
             Pallet pallet = new Pallet(palletID);
             palletID++;
-            for (int j = 0; j < boxesOnPallet; j++) {
+            int j=0;
+            while(j<boxesOnPallet)
+            {
                 pallet.storeBox(boxes[boxIndex]);
                 boxIndex++;
+                j++;
             }
-            pallets[i] = pallet;
+
+            pallets[counter] = pallet;
+            counter++;
         }
 
         // Generate base_pallet.csv
@@ -87,13 +106,19 @@ public class Generate {
         Truck[] trucks = new Truck[Configuration.instance.numberOfTrucks];
         int palletIndex=0;
         int numberOfPalletsOnTruck = Configuration.instance.numberOfPallets/Configuration.instance.numberOfTrucks;
-        for (int i = 0; i < Configuration.instance.numberOfTrucks; i++) {
+        counter=0;
+        while(counter<Configuration.instance.numberOfTrucks)
+        {
             Truck truck = new Truck();
-            for (int j = 0; j < numberOfPalletsOnTruck; j++) {
+            int j=0;
+            while(j<numberOfPalletsOnTruck)
+            {
                 truck.storePallet(pallets[palletIndex]);
                 palletIndex++;
+                j++;
             }
-            trucks[i] = truck;
+            trucks[counter] = truck;
+            counter++;
         }
 
         // Generate base_truck.csv
